@@ -1,20 +1,64 @@
-import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+require("dotenv").config();
+import { AppDataSource } from "./data-source";
+import { User } from "./entity/User";
+import express, {
+  NextFunction,
+  Response,
+  Request,
+  ErrorRequestHandler,
+} from "express";
+import { appendFile } from "fs";
+import cookieParser from "cookie-parser";
+import path from "path";
+import indexRouter from "./routes";
+import cors from "cors";
+import csurf from "csurf";
+const isProduction = process.env.NODE_ENV === "production";
 
-AppDataSource.initialize().then(async () => {
+// Init
+AppDataSource.initialize()
+  .then(async () => {
+    // Init
+    const app = express();
 
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
+    // Security Middleware
+    app.use(cors()); // For development;
+    // app.use(
+    //   csurf({
+    //     cookie: {
+    //       secure: isProduction,
+    //       sameSite: isProduction,
+    //       httpOnly: true,
+    //     },
+    //   })
+    // );
 
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
+    // Parsing
+    app.use(cookieParser());
+    app.use(express.json());
+    app.use(express.urlencoded());
+    app.use(express.static(path.join(__dirname, "public"))); // Serve all files in url -> localhost:3000/dog.jpg
 
-    console.log("Here you can setup and run express / fastify / any other framework.")
+    // Main routing
+    app.use("/", indexRouter);
 
-}).catch(error => console.log(error))
+    // 404
+    app.use((req: Request, res: Response, next: NextFunction) => {
+      res.status(404).send("site not found");
+    });
+
+    // Error Handler
+    app.use(
+      (
+        err: ErrorRequestHandler,
+        req: Request,
+        res: Response,
+        next: NextFunction
+      ) => {
+        res.send(err);
+      }
+    );
+
+    app.listen(8000, () => console.log("server listining to: 8000"));
+  })
+  .catch((error) => console.log(error));

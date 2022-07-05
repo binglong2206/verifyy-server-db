@@ -1,18 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Request, Response } from "express";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number
+  @Column()
+  firstName: string;
 
-    @Column()
-    firstName: string
+  @Column()
+  lastName: string;
 
-    @Column()
-    lastName: string
-
-    @Column()
-    age: number
-
+  @Column({ nullable: true })
+  age: number | null;
 }
