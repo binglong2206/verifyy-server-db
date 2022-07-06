@@ -1,6 +1,7 @@
 require("dotenv").config();
 import { AppDataSource } from "./data-source";
 import { User } from "./entity/User";
+import { Book } from "./entity/Book";
 import express, {
   NextFunction,
   Response,
@@ -12,19 +13,32 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import indexRouter from "./routes";
 import cors from "cors";
-import csurf from "csurf";
 const isProduction = process.env.NODE_ENV === "production";
 
 // Init
 AppDataSource.initialize()
   .then(async () => {
+    console.log("Postgres Connected");
+
+    const someuser = await User.findOneBy({
+      id: 1,
+    });
+    someuser.username = "777777";
+    await AppDataSource.manager.save(someuser);
+
     // Init
     const app = express();
 
     // Security Middleware
-    app.use(cors()); // For development;
+    app.use(
+      cors({
+        origin: "http://localhost:3000",
+        credentials: true,
+      })
+    );
+
     // app.use(
-    //   csurf({
+    //   csurf({ss
     //     cookie: {
     //       secure: isProduction,
     //       sameSite: isProduction,
@@ -34,12 +48,17 @@ AppDataSource.initialize()
     // );
 
     // Parsing
-    app.use(cookieParser());
+    app.use(cookieParser("secret"));
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(express.static(path.join(__dirname, "public"))); // Serve all files in url -> localhost:3000/dog.jpg
 
     // Main routing
+    app.get("/", async (req: Request, res: Response, next: NextFunction) => {
+      const users = await User.find();
+      console.log(users);
+      res.json(users);
+    });
     app.use("/", indexRouter);
 
     // 404
@@ -47,7 +66,7 @@ AppDataSource.initialize()
       res.status(404).send("site not found");
     });
 
-    // Error Handler
+    // Main Error Handler
     app.use(
       (
         err: ErrorRequestHandler,

@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import { User } from "../entity/User";
-import { loginHandler } from "../utils/auth";
+import { authenticateJWT, loginHandler, logoutHandler } from "../utils/auth";
 
 const router = express.Router();
 
@@ -9,14 +9,11 @@ interface reqBody {
   password: string;
 }
 
-router.post(
-  "/login",
-  // next Function is assigned automatically by app.use()
-  async (req: Request, res: Response, next: NextFunction) => {
-    const accessToken = await loginHandler(req, res, next); // req & res objects can be mutated out of scope;
+// next Function is assigned automatically by app.use()
+router.post("/login", loginHandler);
 
-    res.send(accessToken);
-  }
-);
+router.post("/restricted", authenticateJWT);
+
+router.delete("/logout", logoutHandler);
 
 export default router;

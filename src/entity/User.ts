@@ -1,5 +1,13 @@
 import { Request, Response } from "express";
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Generated,
+} from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
@@ -7,11 +15,24 @@ export class User extends BaseEntity {
   id: number;
 
   @Column()
-  firstName: string;
+  @Generated("uuid")
+  uuid: string;
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 
   @Column()
-  lastName: string;
+  firstname: string;
 
-  @Column({ nullable: true })
-  age: number | null;
+  @Column({ unique: true })
+  username: string;
+
+  @Column()
+  password: string;
+
+  @Column({ unique: true })
+  email: string;
 }
