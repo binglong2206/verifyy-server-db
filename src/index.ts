@@ -20,12 +20,6 @@ AppDataSource.initialize()
   .then(async () => {
     console.log("Postgres Connected");
 
-    const someuser = await User.findOneBy({
-      id: 1,
-    });
-    someuser.username = "777777";
-    await AppDataSource.manager.save(someuser);
-
     // Init
     const app = express();
 
@@ -48,17 +42,11 @@ AppDataSource.initialize()
     // );
 
     // Parsing
-    app.use(cookieParser("secret"));
     app.use(express.json());
-    app.use(express.urlencoded());
+    app.use(express.urlencoded({ extended: true }));
     app.use(express.static(path.join(__dirname, "public"))); // Serve all files in url -> localhost:3000/dog.jpg
 
     // Main routing
-    app.get("/", async (req: Request, res: Response, next: NextFunction) => {
-      const users = await User.find();
-      console.log(users);
-      res.json(users);
-    });
     app.use("/", indexRouter);
 
     // 404
@@ -74,7 +62,8 @@ AppDataSource.initialize()
         res: Response,
         next: NextFunction
       ) => {
-        res.send(err);
+        console.error("MY OWN ERROR HANDLER");
+        res.status(400).send("MY OWN ERROR HANDLER");
       }
     );
 

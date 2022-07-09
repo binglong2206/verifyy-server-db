@@ -63,7 +63,7 @@ export function authenticateJWT(
 ) {
   try {
     const { accessToken, refreshToken } = req.body;
-    if (!refreshToken) throw "";
+    if (!refreshToken) throw Error("no refresh token");
     if (accessToken) {
       const decodedUser = jwt.verify(accessToken, process.env.JWT_ACCESS_KEY);
       return res.send("accessToken still active");

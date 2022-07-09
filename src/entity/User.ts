@@ -31,7 +31,7 @@ export class User extends BaseEntity {
   username: string;
 
   @Column()
-  password: string;
+  hashed_password: string;
 
   @Column({ unique: true })
   email: string;
