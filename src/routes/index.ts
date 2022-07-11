@@ -6,6 +6,7 @@ import { authenticateJWT } from "../middleware/authenticateJWT";
 import showUsers from "../controller/showUsers";
 import showData from "../controller/showData";
 import { authorizationUrl } from "../google";
+import beta_users from "../beta-users";
 
 const router = express.Router();
 
@@ -14,8 +15,30 @@ const router = express.Router();
 router.post("/fb", (req: Request, res: Response, next: NextFunction) => {
   console.log("json received");
   console.log(req.body.business_discovery.media.data);
-  res.end();
+  res.status(200).end();
 });
+
+router.get(
+  "/checkslug/:slug",
+  (req: Request, res: Response, next: NextFunction) => {
+    const { slug } = req.params;
+
+    if (!beta_users.find((e) => e.username === slug)) {
+      res.json({
+        redirect: {
+          destination: "/404",
+        },
+      });
+    }
+
+    res.json({
+      props: {
+        id: slug,
+        username: slug,
+      },
+    });
+  }
+);
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("homepage");
@@ -31,7 +54,6 @@ router.get("/restricted", authenticateJWT);
 router.delete("/logout", logoutHandler);
 
 router.get("/google", (req: Request, res: Response, next: NextFunction) => {
-  console.log("asod");
   res.redirect(authorizationUrl);
 });
 
