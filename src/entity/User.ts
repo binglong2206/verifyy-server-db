@@ -18,16 +18,16 @@ export class User extends BaseEntity {
   @Generated("uuid")
   uuid: string;
 
-  @Column()
+  @Column({ nullable: true })
   firstname: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   username: string;
 
-  @Column()
+  @Column({ nullable: true })
   hashed_password: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   email: string;
 
   @CreateDateColumn()
