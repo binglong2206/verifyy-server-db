@@ -9,7 +9,9 @@ import {
   Generated,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
+import { IG_media } from "./IG_media";
 import { User } from "./User";
 
 @Entity()
@@ -44,4 +46,7 @@ export class IG_account extends BaseEntity {
   @OneToOne(() => User, { cascade: true })
   @JoinColumn()
   user_id: User;
+
+  @OneToMany(() => IG_media, (media) => media.account_id)
+  medias: IG_media[];
 }

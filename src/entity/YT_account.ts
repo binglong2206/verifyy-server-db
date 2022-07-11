@@ -9,8 +9,10 @@ import {
   Generated,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { User } from "./User";
+import { YT_media } from "./YT_media";
 
 @Entity()
 export class YT_account extends BaseEntity {
@@ -35,4 +37,7 @@ export class YT_account extends BaseEntity {
   @OneToOne(() => User, { cascade: true })
   @JoinColumn()
   user_id: User;
+
+  @OneToMany(() => YT_media, (media) => media.account_id)
+  medias: YT_media[];
 }

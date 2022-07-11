@@ -9,18 +9,26 @@ import {
   Generated,
   OneToOne,
   JoinColumn,
+  ManyToOne,
 } from "typeorm";
+import { Url } from "url";
 import { User } from "./User";
+import { FB_account } from "./FB_account";
 
 @Entity()
 export class FB_media extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
-  impressions: number;
+  @Column()
+  like_count: number;
 
-  @OneToOne(() => User, { cascade: true })
-  @JoinColumn()
-  user_id: User;
+  @Column()
+  post_url: string;
+
+  @Column()
+  asset_url: string;
+
+  @ManyToOne(() => FB_account, (account_id) => account_id.medias)
+  account_id: FB_account;
 }
