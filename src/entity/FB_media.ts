@@ -20,17 +20,17 @@ export class FB_media extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   like_count: number;
 
-  @Column()
+  @Column({ nullable: true })
   post_url: string;
 
-  @Column()
+  @Column({ nullable: true })
   asset_url: string;
 
   @ManyToOne(() => FB_account, (FB_account) => FB_account.medias)
-  account_id: FB_account;
+  account: FB_account;
 
   @CreateDateColumn()
   created: Date;

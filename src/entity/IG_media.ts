@@ -38,7 +38,7 @@ export class IG_media extends BaseEntity {
   asset_url: string;
 
   @ManyToOne(() => IG_account, (account_id) => account_id.medias)
-  account_id: IG_account;
+  account: IG_account;
 
   @CreateDateColumn()
   created: Date;

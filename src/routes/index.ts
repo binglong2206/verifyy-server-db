@@ -55,7 +55,7 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
 
   const newFB = new FB_account();
   newFB.like_counts = 777;
-  newFB.user_id = newUser;
+  newFB.user = newUser;
   newFB.demographics = { test1: "test1" };
 
   AppDataSource.manager.save(newUser);
@@ -67,11 +67,37 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
 router.get("/json", async (req: Request, res: Response, next: NextFunction) => {
   const fb = await FB_account.find({
     relations: {
-      user_id: true,
+      user: true,
+      medias: true,
+    },
+    where: {
+      // foreign columns are just nested object in the parent entity
+      user: {
+        id: 41,
+      },
     },
   });
-
+  const demographics = fb[0].demographics;
+  console.log(demographics["dog"]);
   res.send(fb);
+});
+
+router.get("/many", async (req: Request, res: Response, next: NextFunction) => {
+  const fbaccount = await FB_account.findOne({
+    where: {
+      user: {
+        id: 41,
+      },
+    },
+  });
+  const media1 = new FB_media();
+  media1.like_count = 123;
+  media1.account = fbaccount;
+
+  AppDataSource.manager.save(media1);
+
+  console.log("done");
+  res.send("onetomany");
 });
 
 router.get("/data", authenticateJWT, showData);

@@ -38,7 +38,7 @@ export class YT_account extends BaseEntity {
   @JoinColumn()
   user: User;
 
-  @OneToMany(() => YT_media, (YT_media) => YT_media.account_id)
+  @OneToMany(() => YT_media, (YT_media) => YT_media.account)
   medias: YT_media[];
 
   @CreateDateColumn()

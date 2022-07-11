@@ -32,7 +32,7 @@ export class YT_media extends BaseEntity {
   asset_url: string;
 
   @ManyToOne(() => YT_account, (YT_account) => YT_account.medias)
-  account_id: YT_account;
+  account: YT_account;
 
   @CreateDateColumn()
   created: Date;

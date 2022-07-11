@@ -47,7 +47,7 @@ export class IG_account extends BaseEntity {
   @JoinColumn()
   user: User;
 
-  @OneToMany(() => IG_media, (media) => media.account_id)
+  @OneToMany(() => IG_media, (media) => media.account)
   medias: IG_media[];
 
   @CreateDateColumn()

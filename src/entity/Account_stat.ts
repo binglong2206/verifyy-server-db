@@ -23,7 +23,7 @@ export class Account_stat extends BaseEntity {
   // cascade allows u to save with this entity and auto create the referenced entity: User
   @OneToOne(() => User, { onDelete: "CASCADE" }) // Cascade: true
   @JoinColumn()
-  user_id: User;
+  user: User;
 
   @CreateDateColumn()
   created: Date;
