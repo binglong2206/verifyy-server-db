@@ -17,8 +17,29 @@ export class IG_account extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column()
+  profile_views: number;
+
+  @Column()
+  followers: number;
+
+  @Column()
+  like_count: number;
+
+  @Column()
   impressions: number;
+
+  @Column()
+  reach: number;
+
+  @Column()
+  media_count: number;
+
+  @Column()
+  demographics: JSON;
+
+  @Column()
+  geographics: JSON;
 
   @OneToOne(() => User, { cascade: true })
   @JoinColumn()
