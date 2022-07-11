@@ -17,8 +17,20 @@ export class YT_account extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
-  impressions: number;
+  @Column()
+  subscribers: number;
+
+  @Column()
+  view_count: number;
+
+  @Column()
+  uploads: number;
+
+  @Column()
+  demographics: JSON;
+
+  @Column()
+  geographics: JSON;
 
   @OneToOne(() => User, { cascade: true })
   @JoinColumn()

@@ -17,8 +17,26 @@ export class FB_account extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column()
+  followers: number;
+
+  @Column()
+  like_counts: number;
+
+  @Column()
   impressions: number;
+
+  @Column()
+  engagements: number;
+
+  @Column()
+  media_counts: number;
+
+  @Column()
+  demographics: JSON;
+
+  @Column()
+  geographics: JSON;
 
   @OneToOne(() => User, { cascade: true })
   @JoinColumn()
