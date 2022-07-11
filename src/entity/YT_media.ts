@@ -7,32 +7,20 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Generated,
+  OneToOne,
+  JoinColumn,
 } from "typeorm";
+import { User } from "./User";
 
 @Entity()
-export class User extends BaseEntity {
+export class YT_media extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  @Generated("uuid")
-  uuid: string;
+  @Column({ nullable: true })
+  impressions: number;
 
-  @CreateDateColumn()
-  created: Date;
-
-  @UpdateDateColumn()
-  updated: Date;
-
-  @Column()
-  firstname: string;
-
-  @Column({ unique: true })
-  username: string;
-
-  @Column()
-  hashed_password: string;
-
-  @Column({ unique: true })
-  email: string;
+  @OneToOne(() => User, { cascade: true })
+  @JoinColumn()
+  user_id: User;
 }

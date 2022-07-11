@@ -17,7 +17,7 @@ export class Account_stat extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   impressions: number;
 
   @OneToOne(() => User, { cascade: true })
