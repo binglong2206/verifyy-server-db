@@ -38,6 +38,12 @@ export class YT_account extends BaseEntity {
   @JoinColumn()
   user_id: User;
 
-  @OneToMany(() => YT_media, (media) => media.account_id)
+  @OneToMany(() => YT_media, (YT_media) => YT_media.account_id)
   medias: YT_media[];
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 }

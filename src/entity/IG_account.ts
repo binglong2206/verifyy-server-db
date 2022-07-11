@@ -49,4 +49,10 @@ export class IG_account extends BaseEntity {
 
   @OneToMany(() => IG_media, (media) => media.account_id)
   medias: IG_media[];
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 }

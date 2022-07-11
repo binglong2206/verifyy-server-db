@@ -43,4 +43,10 @@ export class IG_media extends BaseEntity {
 
   @ManyToOne(() => IG_account, (account_id) => account_id.medias)
   account_id: IG_account;
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 }

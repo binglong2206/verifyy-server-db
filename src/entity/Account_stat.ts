@@ -23,4 +23,10 @@ export class Account_stat extends BaseEntity {
   @OneToOne(() => User, { cascade: true })
   @JoinColumn()
   user_id: User;
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 }

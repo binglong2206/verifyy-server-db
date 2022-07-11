@@ -44,6 +44,12 @@ export class FB_account extends BaseEntity {
   @JoinColumn()
   user_id: User;
 
-  @OneToMany(() => FB_media, (media) => media.account_id)
+  @OneToMany(() => FB_media, (FB_media) => FB_media.account_id)
   medias: FB_media[];
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 }

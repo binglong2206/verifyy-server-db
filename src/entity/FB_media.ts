@@ -29,6 +29,12 @@ export class FB_media extends BaseEntity {
   @Column()
   asset_url: string;
 
-  @ManyToOne(() => FB_account, (account_id) => account_id.medias)
+  @ManyToOne(() => FB_account, (FB_account) => FB_account.medias)
   account_id: FB_account;
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 }

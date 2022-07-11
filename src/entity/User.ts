@@ -18,12 +18,6 @@ export class User extends BaseEntity {
   @Generated("uuid")
   uuid: string;
 
-  @CreateDateColumn()
-  created: Date;
-
-  @UpdateDateColumn()
-  updated: Date;
-
   @Column()
   firstname: string;
 
@@ -35,4 +29,10 @@ export class User extends BaseEntity {
 
   @Column({ unique: true })
   email: string;
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 }

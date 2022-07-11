@@ -35,6 +35,12 @@ export class YT_media extends BaseEntity {
   @JoinColumn()
   user_id: User;
 
-  @ManyToOne(() => YT_account, (account_id) => account_id.medias)
+  @ManyToOne(() => YT_account, (YT_account) => YT_account.medias)
   account_id: YT_account;
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
 }
