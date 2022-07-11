@@ -19,30 +19,30 @@ export class FB_account extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   followers: number;
 
-  @Column()
+  @Column({ nullable: true })
   like_counts: number;
 
-  @Column()
+  @Column({ nullable: true })
   impressions: number;
 
-  @Column()
+  @Column({ nullable: true })
   engagements: number;
 
-  @Column()
+  @Column({ nullable: true })
   media_counts: number;
 
-  @Column({ type: "simple-json" })
-  demographics: JSON;
+  @Column({ type: "simple-json", nullable: true })
+  demographics: object;
 
-  @Column({ type: "simple-json" })
+  @Column({ type: "simple-json", nullable: true })
   geographics: JSON;
 
-  @OneToOne(() => User, { cascade: true })
+  @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn()
-  user_id: User;
+  user: User;
 
   @OneToMany(() => FB_media, (FB_media) => FB_media.account_id)
   medias: FB_media[];

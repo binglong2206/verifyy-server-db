@@ -51,18 +51,29 @@ router.get(
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
   const newUser = new User();
-  newUser.firstname = "37";
+  newUser.firstname = "42";
 
-  const newAccountStat = new Account_stat();
-  newAccountStat.impressions = 7777;
-  newAccountStat.user_id = newUser;
+  const newFB = new FB_account();
+  newFB.like_counts = 777;
+  newFB.user_id = newUser;
+  newFB.demographics = { test1: "test1" };
 
-  // AppDataSource.manager.save(newUser);
-  AppDataSource.manager.save(newAccountStat);
+  AppDataSource.manager.save(newUser);
+  AppDataSource.manager.save(newFB);
   console.log("done");
 
   res.send("homepage");
 });
+router.get("/json", async (req: Request, res: Response, next: NextFunction) => {
+  const fb = await FB_account.find({
+    relations: {
+      user_id: true,
+    },
+  });
+
+  res.send(fb);
+});
+
 router.get("/data", authenticateJWT, showData);
 
 router.get("/users", showUsers);

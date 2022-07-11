@@ -37,10 +37,6 @@ export class IG_media extends BaseEntity {
   @Column()
   asset_url: string;
 
-  @OneToOne(() => User, { cascade: true })
-  @JoinColumn()
-  user_id: User;
-
   @ManyToOne(() => IG_account, (account_id) => account_id.medias)
   account_id: IG_account;
 

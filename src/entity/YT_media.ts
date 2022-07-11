@@ -31,10 +31,6 @@ export class YT_media extends BaseEntity {
   @Column()
   asset_url: string;
 
-  @OneToOne(() => User, { cascade: true })
-  @JoinColumn()
-  user_id: User;
-
   @ManyToOne(() => YT_account, (YT_account) => YT_account.medias)
   account_id: YT_account;
 

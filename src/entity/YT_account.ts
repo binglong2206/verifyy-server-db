@@ -34,9 +34,9 @@ export class YT_account extends BaseEntity {
   @Column({ type: "simple-json" })
   geographics: JSON;
 
-  @OneToOne(() => User, { cascade: true })
+  @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn()
-  user_id: User;
+  user: User;
 
   @OneToMany(() => YT_media, (YT_media) => YT_media.account_id)
   medias: YT_media[];
