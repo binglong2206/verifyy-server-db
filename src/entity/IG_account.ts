@@ -37,10 +37,10 @@ export class IG_account extends BaseEntity {
   @Column()
   media_count: number;
 
-  @Column()
+  @Column({ type: "simple-json" })
   demographics: JSON;
 
-  @Column()
+  @Column({ type: "simple-json" })
   geographics: JSON;
 
   @OneToOne(() => User, { cascade: true })

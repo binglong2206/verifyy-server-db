@@ -28,10 +28,10 @@ export class YT_account extends BaseEntity {
   @Column()
   uploads: number;
 
-  @Column()
+  @Column({ type: "simple-json" })
   demographics: JSON;
 
-  @Column()
+  @Column({ type: "simple-json" })
   geographics: JSON;
 
   @OneToOne(() => User, { cascade: true })
