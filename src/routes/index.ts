@@ -130,9 +130,7 @@ router.get(
 );
 
 router.get("/data", authenticateJWT, showData);
-
 router.get("/users", showUsers);
-
 router.post("/login", loginHandler);
 router.post("/signup", signupHandler);
 router.delete("/logout", logoutHandler);
