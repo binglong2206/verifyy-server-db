@@ -9,7 +9,7 @@ import { IG_media } from "../entity/IG_media";
 import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
 
-import { loginHandler, logoutHandler } from "../utils/auth";
+import { loginHandler, signupHandler, logoutHandler } from "../middleware/auth";
 import { authenticateJWT } from "../middleware/authenticateJWT";
 import showUsers from "../controller/showUsers";
 import showData from "../controller/showData";
@@ -134,10 +134,10 @@ router.get("/data", authenticateJWT, showData);
 router.get("/users", showUsers);
 
 router.post("/login", loginHandler);
+router.post("/signup", signupHandler);
+router.delete("/logout", logoutHandler);
 
 router.get("/restricted", authenticateJWT);
-
-router.delete("/logout", logoutHandler);
 
 router.get("/google", (req: Request, res: Response, next: NextFunction) => {
   res.redirect(authorizationUrl);
