@@ -16,6 +16,7 @@ export function verifyCookieJWT(
   const cookies = cookie.parse(req.headers.cookie);
   const { accessToken, refreshToken } = cookies;
 
+  // jwt.verify will auto throw error to next(err) if fail
   const access = jwt.verify(
     accessToken,
     process.env.JWT_ACCESS_SECRET

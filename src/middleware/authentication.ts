@@ -35,25 +35,25 @@ export async function loginHandler(
     const accessToken = jwt.sign(
       { id: user.id, username: user.username },
       process.env.JWT_ACCESS_SECRET as string,
-      { expiresIn: "5m" }
+      { expiresIn: "30m" }
     );
     const refreshToken = jwt.sign(
       { sessionId: 0, id: user.id, username: user.username },
       process.env.JWT_REFRESH_SECRET as string,
-      { expiresIn: "10m" }
+      { expiresIn: "60m" }
     );
 
     // Set Cookie
     res.setHeader("Set-Cookie", [
       cookie.serialize("accessToken", accessToken, {
-        maxAge: 300,
+        maxAge: 3000,
         httpOnly: true,
         sameSite: true,
         secure: true,
         path: "/",
       }),
       cookie.serialize("refreshToken", refreshToken, {
-        maxAge: 3.154e10,
+        maxAge: 6000,
         httpOnly: true,
         sameSite: true,
         secure: true,
@@ -99,25 +99,25 @@ export async function signupHandler(
     const accessToken = jwt.sign(
       { id: newUser.uuid, username: newUser.username },
       process.env.JWT_ACCESS_SECRET as string,
-      { expiresIn: "5m" }
+      { expiresIn: "30m" }
     );
     const refreshToken = jwt.sign(
       { sessionId: 0, id: newUser.uuid, username: newUser.username },
       process.env.JWT_REFRESH_SECRET as string,
-      { expiresIn: "10m" }
+      { expiresIn: "60m" }
     );
 
     // Set Cookie
     res.setHeader("Set-Cookie", [
       cookie.serialize("accessToken", accessToken, {
-        maxAge: 3.154e10,
+        maxAge: 3000,
         httpOnly: true,
         sameSite: true,
         secure: true,
         path: "/",
       }),
       cookie.serialize("refreshToken", refreshToken, {
-        maxAge: 3.154e10,
+        maxAge: 6000,
         httpOnly: true,
         sameSite: true,
         secure: true,
@@ -146,33 +146,33 @@ export function logoutHandler(req: Request, res: Response, next: NextFunction) {
   res.end();
 }
 
-export function authenticateJWT(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    const { accessToken, refreshToken } = req.body;
-    if (!refreshToken) throw Error("no refresh token");
-    if (accessToken) {
-      const decodedUser = jwt.verify(accessToken, process.env.JWT_ACCESS_KEY);
-      return res.send("accessToken still active");
-    }
-    if (refreshToken && !accessToken) {
-      const session = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
-      const accessToken = jwt.sign(
-        { username: session["username"] },
-        process.env.JWT_ACCESS_KEY,
-        {
-          expiresIn: "New accessToken",
-        }
-      );
-      return res.send(accessToken);
-    }
-  } catch (e) {
-    res.clearCookie("accessToken");
-    const err = new Error();
-    err.message = "Not Authorized, please login 77777";
-    return next(err);
-  }
-}
+// export function authenticateJWT(
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) {
+//   try {
+//     const { accessToken, refreshToken } = req.body;
+//     if (!refreshToken) throw Error("no refresh token");
+//     if (accessToken) {
+//       const decodedUser = jwt.verify(accessToken, process.env.JWT_ACCESS_KEY);
+//       return res.send("accessToken still active");
+//     }
+//     if (refreshToken && !accessToken) {
+//       const session = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
+//       const accessToken = jwt.sign(
+//         { username: session["username"] },
+//         process.env.JWT_ACCESS_KEY,
+//         {
+//           expiresIn: "New accessToken",
+//         }
+//       );
+//       return res.send(accessToken);
+//     }
+//   } catch (e) {
+//     res.clearCookie("accessToken");
+//     const err = new Error();
+//     err.message = "Not Authorized, please login 77777";
+//     return next(err);
+//   }
+// }
