@@ -16,6 +16,8 @@ import showData from "../controller/showData";
 import { authorizationUrl } from "../google";
 import beta_users from "../beta-users";
 import { AppDataSource } from "../data-source";
+import cookie from "cookie";
+import { Tree } from "typeorm";
 
 const router = express.Router();
 
@@ -27,6 +29,7 @@ router.post("/fb", (req: Request, res: Response, next: NextFunction) => {
   res.status(200).end();
 });
 
+// Only for beta cus' have pre-defined slugs, should be dynamic to when user create account in prod
 router.get(
   "/checkslug/:slug",
   (req: Request, res: Response, next: NextFunction) => {
@@ -99,6 +102,32 @@ router.get("/many", async (req: Request, res: Response, next: NextFunction) => {
   console.log("done");
   res.send("onetomany");
 });
+
+router.get(
+  "/cookie",
+  async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.headers);
+
+    // res.setHeader("Set-Cookie", [
+    //   cookie.serialize("accessToken", "accessToken", {
+    //     maxAge: 3.154e10,
+    //     httpOnly: true,
+    //     sameSite: true,
+    //     secure: true,
+    //     path: "/",
+    //   }),
+    //   cookie.serialize("refreshToken", "refreshToken", {
+    //     maxAge: 3.154e10,
+    //     httpOnly: true,
+    //     sameSite: true,
+    //     secure: true,
+    //     path: "/",
+    //   }),
+    // ]);
+    // console.log("cookie set");
+    res.end();
+  }
+);
 
 router.get("/data", authenticateJWT, showData);
 

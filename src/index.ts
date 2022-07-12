@@ -23,10 +23,18 @@ AppDataSource.initialize()
     const app = express();
 
     // Security Middleware
+    // app.use(
+    //   cors({
+    //     origin: "http://localhost:3000",
+    //     credentials: true,
+    //   })
+    // );
+
     app.use(
       cors({
-        origin: "http://localhost:3000",
         credentials: true,
+        // allowedHeaders: ["Content-Type", "Authorization"],
+        origin: ["http://localhost:3000"],
       })
     );
 
