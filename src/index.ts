@@ -70,6 +70,7 @@ AppDataSource.initialize()
         next: NextFunction
       ) => {
         console.error("MY OWN ERROR HANDLER");
+        console.error(err);
         res.status(400).send("MY OWN ERROR HANDLER");
       }
     );

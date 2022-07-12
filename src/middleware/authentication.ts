@@ -34,17 +34,19 @@ export async function loginHandler(
     // Sign JWT Token
     const accessToken = jwt.sign(
       { id: user.id, username: user.username },
-      process.env.JWT_ACCESS_SECRET as string
+      process.env.JWT_ACCESS_SECRET as string,
+      { expiresIn: "5m" }
     );
     const refreshToken = jwt.sign(
       { sessionId: 0, id: user.id, username: user.username },
-      process.env.JWT_REFRESH_SECRET as string
+      process.env.JWT_REFRESH_SECRET as string,
+      { expiresIn: "10m" }
     );
 
     // Set Cookie
     res.setHeader("Set-Cookie", [
       cookie.serialize("accessToken", accessToken, {
-        maxAge: 3.154e10,
+        maxAge: 300,
         httpOnly: true,
         sameSite: true,
         secure: true,
@@ -96,11 +98,13 @@ export async function signupHandler(
     // Sign JWT Token
     const accessToken = jwt.sign(
       { id: newUser.uuid, username: newUser.username },
-      process.env.JWT_ACCESS_SECRET as string
+      process.env.JWT_ACCESS_SECRET as string,
+      { expiresIn: "5m" }
     );
     const refreshToken = jwt.sign(
       { sessionId: 0, id: newUser.uuid, username: newUser.username },
-      process.env.JWT_REFRESH_SECRET as string
+      process.env.JWT_REFRESH_SECRET as string,
+      { expiresIn: "10m" }
     );
 
     // Set Cookie
@@ -129,20 +133,16 @@ export async function signupHandler(
 }
 
 export function logoutHandler(req: Request, res: Response, next: NextFunction) {
-  console.log(req.headers);
-
   // Clear cookies
-  res.cookie("accessToken", "", {
-    maxAge: 0,
-    httpOnly: true,
-  });
+  res.setHeader("Set-Cookie", [
+    cookie.serialize("accessToken", "expired", {
+      maxAge: 0,
+    }),
+    cookie.serialize("refreshToken", "expired", {
+      maxAge: 0,
+    }),
+  ]);
 
-  res.cookie("refreshToken", "", {
-    maxAge: 0,
-    httpOnly: true,
-  });
-
-  console.log("cookies cleared");
   res.end();
 }
 

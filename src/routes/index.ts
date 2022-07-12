@@ -9,8 +9,12 @@ import { IG_media } from "../entity/IG_media";
 import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
 
-import { loginHandler, signupHandler, logoutHandler } from "../middleware/auth";
-import { authenticateJWT } from "../middleware/authenticateJWT";
+import {
+  loginHandler,
+  signupHandler,
+  logoutHandler,
+} from "../middleware/authentication";
+import { verifyCookieJWT, verifyHeaderJWT } from "../middleware/verifyJWT";
 import showUsers from "../controller/showUsers";
 import showData from "../controller/showData";
 import { authorizationUrl } from "../google";
@@ -22,12 +26,6 @@ import { Tree } from "typeorm";
 const router = express.Router();
 
 // next Function is automatically assigned by app.use()
-
-router.post("/fb", (req: Request, res: Response, next: NextFunction) => {
-  console.log("json received");
-  console.log(req.body.business_discovery.media.data);
-  res.status(200).end();
-});
 
 // Only for beta cus' have pre-defined slugs, should be dynamic to when user create account in prod
 router.get(
@@ -129,13 +127,36 @@ router.get(
   }
 );
 
-router.get("/data", authenticateJWT, showData);
+router.post(
+  "/yt",
+  verifyHeaderJWT,
+  async (req: Request, res: Response, next: NextFunction) => {
+    console.log("POSTING DATA: ", req.body);
+    console.log("ALL DONE", res.locals);
+    res.end();
+  }
+);
+
+router.get(
+  "/dashboard/:id",
+  verifyCookieJWT,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = parseInt(req.params.id);
+    const user = await User.findOneBy({
+      id: id,
+    });
+
+    res.json({ email: user.email });
+  }
+);
+
+router.get("/data", verifyCookieJWT, showData);
 router.get("/users", showUsers);
 router.post("/login", loginHandler);
 router.post("/signup", signupHandler);
 router.delete("/logout", logoutHandler);
 
-router.get("/restricted", authenticateJWT);
+router.get("/restricted", verifyCookieJWT);
 
 router.get("/google", (req: Request, res: Response, next: NextFunction) => {
   res.redirect(authorizationUrl);
