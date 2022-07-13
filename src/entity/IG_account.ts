@@ -38,10 +38,10 @@ export class IG_account extends BaseEntity {
   media_count: number;
 
   @Column({ type: "simple-json" })
-  demographics: JSON;
+  demographics: any;
 
   @Column({ type: "simple-json" })
-  geographics: JSON;
+  geographics: any;
 
   @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn()

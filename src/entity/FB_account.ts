@@ -35,10 +35,10 @@ export class FB_account extends BaseEntity {
   media_counts: number;
 
   @Column({ type: "simple-json", nullable: true })
-  demographics: object;
+  demographics: any;
 
   @Column({ type: "simple-json", nullable: true })
-  geographics: JSON;
+  geographics: any;
 
   @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn()

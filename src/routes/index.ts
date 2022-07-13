@@ -22,6 +22,7 @@ import beta_users from "../beta-users";
 import { AppDataSource } from "../data-source";
 import cookie from "cookie";
 import { Tree } from "typeorm";
+import youtubeRouter from "./youtube";
 
 const router = express.Router();
 
@@ -62,7 +63,6 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
   // AppDataSource.manager.save(newUser);
   // AppDataSource.manager.save(newFB);
   // console.log("done");
-
   res.send("homepage");
 });
 router.get("/json", async (req: Request, res: Response, next: NextFunction) => {
@@ -127,16 +127,6 @@ router.get(
   }
 );
 
-router.post(
-  "/yt",
-  verifyHeaderJWT,
-  async (req: Request, res: Response, next: NextFunction) => {
-    console.log("POSTING DATA: ", req.body);
-    console.log("ALL DONE", res.locals);
-    res.end();
-  }
-);
-
 router.get(
   "/dashboard/:id",
   verifyCookieJWT,
@@ -150,6 +140,7 @@ router.get(
   }
 );
 
+router.use("/youtube", verifyHeaderJWT, youtubeRouter);
 router.get("/data", verifyCookieJWT, showData);
 router.get("/users", showUsers);
 router.post("/login", loginHandler);
