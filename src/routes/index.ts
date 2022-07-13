@@ -51,17 +51,17 @@ router.get(
 );
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
-  const newUser = new User();
-  newUser.firstname = "42";
+  // const newUser = new User();
+  // newUser.firstname = "42";
 
-  const newFB = new FB_account();
-  newFB.like_counts = 777;
-  newFB.user = newUser;
-  newFB.demographics = { test1: "test1" };
+  // const newFB = new FB_account();
+  // newFB.like_counts = 777;
+  // newFB.user = newUser;
+  // newFB.demographics = { test1: "test1" };
 
-  AppDataSource.manager.save(newUser);
-  AppDataSource.manager.save(newFB);
-  console.log("done");
+  // AppDataSource.manager.save(newUser);
+  // AppDataSource.manager.save(newFB);
+  // console.log("done");
 
   res.send("homepage");
 });

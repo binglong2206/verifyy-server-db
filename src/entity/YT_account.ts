@@ -19,19 +19,19 @@ export class YT_account extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   subscribers: number;
 
-  @Column()
+  @Column({ nullable: true })
   view_count: number;
 
-  @Column()
+  @Column({ nullable: true })
   uploads: number;
 
-  @Column({ type: "simple-json" })
+  @Column({ type: "simple-json", nullable: true })
   demographics: JSON;
 
-  @Column({ type: "simple-json" })
+  @Column({ type: "simple-json", nullable: true })
   geographics: JSON;
 
   @OneToOne(() => User, { onDelete: "CASCADE" })
