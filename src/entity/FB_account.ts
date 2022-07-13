@@ -25,11 +25,11 @@ export class FB_account extends BaseEntity {
   @Column({ nullable: true })
   like_counts: number;
 
-  @Column({ nullable: true })
-  impressions: number;
+  // @Column({ nullable: true })
+  // impressions: number;
 
-  @Column({ nullable: true })
-  engagements: number;
+  // @Column({ nullable: true })
+  // engagements: number;
 
   @Column({ nullable: true })
   media_counts: number;
