@@ -23,6 +23,7 @@ import { AppDataSource } from "../data-source";
 import cookie from "cookie";
 import { Tree } from "typeorm";
 import youtubeRouter from "./youtube";
+import instagramRouter from "./instagram";
 
 const router = express.Router();
 
@@ -141,6 +142,7 @@ router.get(
 );
 
 router.use("/youtube", verifyHeaderJWT, youtubeRouter);
+router.use("/instagram", verifyHeaderJWT, instagramRouter);
 router.get("/data", verifyCookieJWT, showData);
 router.get("/users", showUsers);
 router.post("/login", loginHandler);

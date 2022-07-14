@@ -8,7 +8,7 @@ import { IG_media } from "../entity/IG_media";
 import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
 
-export async function updateYT(
+export async function updateIG(
   req: Request,
   res: Response,
   next: NextFunction
@@ -16,7 +16,7 @@ export async function updateYT(
   try {
     const reqBody = req.body;
     console.log(reqBody);
-    console.log("Authorization: ", res.locals.id, res.locals.username);
+    console.log("INSTGAGRAM GOOD: ", res.locals.id, res.locals.username);
 
     res.end();
   } catch (err) {
