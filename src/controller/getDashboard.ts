@@ -23,7 +23,7 @@ export async function getDashboard(
       },
     });
 
-    console.log(yt_account);
+    console.log("ready to send data to dashboard");
 
     res.json(JSON.stringify(yt_account));
   } catch (err) {
