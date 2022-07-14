@@ -24,6 +24,7 @@ import cookie from "cookie";
 import { Tree } from "typeorm";
 import youtubeRouter from "./youtube";
 import instagramRouter from "./instagram";
+import facebookRouter from "./facebook";
 
 const router = express.Router();
 
@@ -143,6 +144,8 @@ router.get(
 
 router.use("/youtube", verifyHeaderJWT, youtubeRouter);
 router.use("/instagram", verifyHeaderJWT, instagramRouter);
+router.use("/facebook", verifyHeaderJWT, facebookRouter);
+
 router.get("/data", verifyCookieJWT, showData);
 router.get("/users", showUsers);
 router.post("/login", loginHandler);
