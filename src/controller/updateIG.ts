@@ -15,7 +15,7 @@ export async function updateIG(
 ) {
   try {
     const reqBody = req.body;
-    console.log(reqBody);
+    console.log("DATA RECEIVED: ", reqBody);
     console.log("INSTGAGRAM GOOD: ", res.locals.id, res.locals.username);
 
     res.end();
