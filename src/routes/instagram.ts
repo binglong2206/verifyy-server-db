@@ -1,10 +1,10 @@
 import express, { NextFunction, Request, Response } from "express";
 import { verifyHeaderJWT } from "../middleware/verifyJWT";
-import { updateYT } from "../controller/updateYT";
+import { updateYT } from "../controller/updateIG";
 const router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
-  res.send("Youtube API homepage");
+  res.send("Instagram API homepage");
 });
 
 router.post("/", updateYT);
