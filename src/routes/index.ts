@@ -25,6 +25,7 @@ import { Tree } from "typeorm";
 import youtubeRouter from "./youtube";
 import instagramRouter from "./instagram";
 import facebookRouter from "./facebook";
+import dashboardRouter from "./dashboard";
 
 const router = express.Router();
 
@@ -129,19 +130,7 @@ router.get(
   }
 );
 
-router.get(
-  "/dashboard/:id",
-  verifyCookieJWT,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const id = parseInt(req.params.id);
-    const user = await User.findOneBy({
-      id: id,
-    });
-
-    res.json({ email: user.email });
-  }
-);
-
+router.use("/dashboard", verifyCookieJWT, dashboardRouter);
 router.use("/youtube", verifyHeaderJWT, youtubeRouter);
 router.use("/instagram", verifyHeaderJWT, instagramRouter);
 router.use("/facebook", verifyHeaderJWT, facebookRouter);

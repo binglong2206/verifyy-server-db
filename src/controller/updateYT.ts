@@ -29,10 +29,10 @@ export async function updateYT(
     }
 
     yt_account.subscriber_count = req.body.subscriber_count;
-    yt_account.view_count = 324;
+    yt_account.view_count = req.body.view_count;
     yt_account.upload_count = req.body.upload_count;
-    yt_account.demographics = JSON.stringify(req.body.demographics);
-    yt_account.geographics = JSON.stringify(req.body.geographics);
+    yt_account.demographics = req.body.demographics; // no need to jason stringify
+    yt_account.geographics = req.body.geographics; // insert as object, but stored as json
     yt_account.user = await User.findOneBy({
       id: id,
     });
