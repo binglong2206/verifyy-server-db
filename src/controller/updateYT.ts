@@ -7,6 +7,7 @@ import { IG_account } from "../entity/IG_account";
 import { IG_media } from "../entity/IG_media";
 import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
+import { AppDataSource } from "../data-source";
 
 export async function updateYT(
   req: Request,
@@ -14,8 +15,30 @@ export async function updateYT(
   next: NextFunction
 ) {
   try {
-    const reqBody = req.body;
-    console.log(reqBody);
+    const { id, username } = res.locals;
+
+    // Check if yt_account exist
+    let yt_account = await YT_account.findOneBy({
+      user: {
+        id: id,
+      },
+    });
+
+    if (!yt_account) {
+      yt_account = new YT_account();
+    }
+
+    yt_account.subscriber_count = req.body.subscriber_count;
+    yt_account.view_count = 324;
+    yt_account.upload_count = req.body.upload_count;
+    yt_account.demographics = JSON.stringify(req.body.demographics);
+    yt_account.geographics = JSON.stringify(req.body.geographics);
+    yt_account.user = await User.findOneBy({
+      id: id,
+    });
+
+    await AppDataSource.manager.save(yt_account);
+
     console.log("Authorization: ", res.locals.id, res.locals.username);
 
     res.end();

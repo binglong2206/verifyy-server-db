@@ -16,7 +16,7 @@ export async function updateFB(
   try {
     const reqBody = req.body;
     console.log("DATA RECEIVED: ", reqBody);
-    console.log("INSTGAGRAM GOOD: ", res.locals.id, res.locals.username);
+    console.log("FACEBOOK GOOD: ", res.locals.id, res.locals.username);
 
     res.end();
   } catch (err) {
