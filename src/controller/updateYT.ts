@@ -8,6 +8,7 @@ import { IG_media } from "../entity/IG_media";
 import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
 import { AppDataSource } from "../data-source";
+import { appendFile } from "fs";
 
 export async function updateYT(
   req: Request,
@@ -24,10 +25,26 @@ export async function updateYT(
       },
     });
 
+    let yt_media = await YT_media.findOneBy({
+      account: {
+        id: yt_account.id,
+      },
+    });
+
     if (!yt_account) {
       yt_account = new YT_account();
     }
 
+    // Search all medias belonging to user and delete, repository is the real table itself
+    const mediaRepository = AppDataSource.getRepository(YT_media);
+    const medias = await YT_media.findBy({
+      account: {
+        id: yt_account.id,
+      },
+    });
+    if (medias) mediaRepository.remove(medias);
+
+    // Insert from req.body
     yt_account.subscriber_count = req.body.subscriber_count;
     yt_account.view_count = req.body.view_count;
     yt_account.upload_count = req.body.upload_count;
@@ -36,10 +53,19 @@ export async function updateYT(
     yt_account.user = await User.findOneBy({
       id: id,
     });
+    // yt_account.medias = req.body.medias.map(async (e) => {
+    //   const yt_media = new YT_media(); // map & create multiple media entity in array
+    //   yt_media.title = e.title;
+    //   yt_media.view_count = e.view_count;
+    //   yt_media.like_count = e.like_count;
+    //   yt_media.comment_count = e.comment_count;
+    //   yt_media.account = yt_account;
+    //   await AppDataSource.manager.save(yt_media);
+    // });
 
     await AppDataSource.manager.save(yt_account);
 
-    console.log("Authorization: ", res.locals.id, res.locals.username);
+    console.log("UPDATE YOUTUBE DONE ", res.locals.id, res.locals.username);
 
     res.end();
   } catch (err) {

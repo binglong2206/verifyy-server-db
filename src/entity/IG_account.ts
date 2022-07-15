@@ -20,19 +20,10 @@ export class IG_account extends BaseEntity {
   id: number;
 
   @Column()
-  profile_views: number;
+  username: number;
 
   @Column()
-  followers: number;
-
-  @Column()
-  like_count: number;
-
-  @Column()
-  impressions: number;
-
-  @Column()
-  reach: number;
+  follower_count: number;
 
   @Column()
   media_count: number;

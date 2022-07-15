@@ -19,17 +19,17 @@ export class YT_media extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
+  title: string;
+
+  @Column({ nullable: true })
   view_count: number;
 
-  @Column()
+  @Column({ nullable: true })
   like_count: number;
 
-  @Column()
-  post_url: string;
-
-  @Column()
-  asset_url: string;
+  @Column({ nullable: true })
+  comment_count: number;
 
   @ManyToOne(() => YT_account, (YT_account) => YT_account.medias)
   account: YT_account;
