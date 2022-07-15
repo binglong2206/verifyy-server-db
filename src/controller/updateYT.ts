@@ -15,7 +15,7 @@ export async function updateYT(
   next: NextFunction
 ) {
   try {
-    const { id, username } = res.locals;
+    const { id, username } = res.locals; // id & username saved as locals by JWT middleware
 
     // Check if yt_account exist
     let yt_account = await YT_account.findOneBy({
@@ -31,7 +31,7 @@ export async function updateYT(
     yt_account.subscriber_count = req.body.subscriber_count;
     yt_account.view_count = req.body.view_count;
     yt_account.upload_count = req.body.upload_count;
-    yt_account.demographics = req.body.demographics; // no need to jason stringify
+    yt_account.demographics = req.body.demographics; // no need to json stringify
     yt_account.geographics = req.body.geographics; // insert as object, but stored as json
     yt_account.user = await User.findOneBy({
       id: id,
