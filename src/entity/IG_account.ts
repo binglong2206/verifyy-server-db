@@ -19,13 +19,13 @@ export class IG_account extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  username: number;
+  @Column({ nullable: true })
+  username: string;
 
-  @Column()
+  @Column({ nullable: true })
   follower_count: number;
 
-  @Column()
+  @Column({ nullable: true })
   media_count: number;
 
   @Column({ type: "simple-json" })

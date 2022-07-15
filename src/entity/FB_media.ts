@@ -24,10 +24,16 @@ export class FB_media extends BaseEntity {
   like_count: number;
 
   @Column({ nullable: true })
-  post_url: string;
+  comment_count: number;
 
   @Column({ nullable: true })
-  asset_url: string;
+  src_url: string;
+
+  @Column({ nullable: true })
+  media_url: string;
+
+  @Column({ nullable: true })
+  impression_count: string;
 
   @ManyToOne(() => FB_account, (FB_account) => FB_account.medias)
   account: FB_account;

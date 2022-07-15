@@ -31,7 +31,9 @@ export class YT_media extends BaseEntity {
   @Column({ nullable: true })
   comment_count: number;
 
-  @ManyToOne(() => YT_account, (YT_account) => YT_account.medias)
+  @ManyToOne(() => YT_account, (YT_account) => YT_account.medias, {
+    onDelete: "CASCADE",
+  })
   account: YT_account;
 
   @CreateDateColumn()

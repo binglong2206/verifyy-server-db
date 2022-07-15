@@ -25,23 +25,18 @@ export async function updateYT(
       },
     });
 
-    let yt_media = await YT_media.findOneBy({
-      account: {
-        id: yt_account.id,
-      },
-    });
-
     if (!yt_account) {
       yt_account = new YT_account();
     }
 
     // Search all medias belonging to user and delete, repository is the real table itself
-    const mediaRepository = AppDataSource.getRepository(YT_media);
     const medias = await YT_media.findBy({
       account: {
         id: yt_account.id,
       },
     });
+
+    const mediaRepository = AppDataSource.getRepository(YT_media);
     if (medias) mediaRepository.remove(medias);
 
     // Insert from req.body
@@ -53,15 +48,15 @@ export async function updateYT(
     yt_account.user = await User.findOneBy({
       id: id,
     });
-    // yt_account.medias = req.body.medias.map(async (e) => {
-    //   const yt_media = new YT_media(); // map & create multiple media entity in array
-    //   yt_media.title = e.title;
-    //   yt_media.view_count = e.view_count;
-    //   yt_media.like_count = e.like_count;
-    //   yt_media.comment_count = e.comment_count;
-    //   yt_media.account = yt_account;
-    //   await AppDataSource.manager.save(yt_media);
-    // });
+    yt_account.medias = req.body.medias.map(async (e) => {
+      const yt_media = new YT_media(); // map & create multiple media entity in array
+      yt_media.title = e.title;
+      yt_media.view_count = e.view_count;
+      yt_media.like_count = e.like_count;
+      yt_media.comment_count = e.comment_count;
+      yt_media.account = yt_account;
+      await AppDataSource.manager.save(yt_media);
+    });
 
     await AppDataSource.manager.save(yt_account);
 

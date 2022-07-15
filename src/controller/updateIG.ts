@@ -17,7 +17,7 @@ export async function updateIG(
   try {
     const { id, username } = res.locals; // id & username saved as locals by JWT middleware
 
-    // Check if yt_account exist
+    // Check if ig_account exist
     let ig_account = await IG_account.findOneBy({
       user: {
         id: id,
@@ -28,6 +28,17 @@ export async function updateIG(
       ig_account = new IG_account();
     }
 
+    // Search all medias belonging to user and delete, repository is the real table itself
+    const medias = await IG_media.findBy({
+      account: {
+        id: ig_account.id,
+      },
+    });
+
+    const mediaRepository = AppDataSource.getRepository(IG_media);
+    if (medias) mediaRepository.remove(medias);
+
+    // Insert from req.body
     ig_account.username = req.body.username;
     ig_account.follower_count = req.body.follower_count;
     ig_account.media_count = req.body.media_count;
@@ -37,9 +48,21 @@ export async function updateIG(
       id: id,
     });
 
+    ig_account.medias = req.body.medias.map(async (e) => {
+      const ig_media = new IG_media(); // map & create multiple media entity in array
+      ig_media.like_count = e.like_count;
+      ig_media.comment_count = e.comments_count;
+      ig_media.media_url = e.media_url;
+      ig_media.src_url = e.permalink;
+      ig_media.account = ig_account;
+      await AppDataSource.manager.save(ig_media).then(() => {
+        return ig_media;
+      });
+    });
+
     await AppDataSource.manager.save(ig_account);
 
-    console.log("Authorization: ", res.locals.id, res.locals.username);
+    console.log("UPDATE IG DONE ", res.locals.id, res.locals.username);
 
     res.end();
   } catch (err) {
