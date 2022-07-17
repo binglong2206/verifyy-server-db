@@ -27,6 +27,8 @@ export async function updateYT(
 
     if (!yt_account) {
       yt_account = new YT_account();
+      await AppDataSource.manager.save(yt_account); // Save here so media entity can assign to it
+
     }
 
     // Search all medias belonging to user and delete, repository is the real table itself
@@ -55,6 +57,7 @@ export async function updateYT(
       yt_media.like_count = e.like_count;
       yt_media.comment_count = e.comment_count;
       yt_media.account = yt_account;
+      console.log(yt_account)
       await AppDataSource.manager.save(yt_media);
     });
 

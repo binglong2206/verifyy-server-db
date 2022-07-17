@@ -26,6 +26,7 @@ export async function updateFB(
 
     if (!fb_account) {
       fb_account = new FB_account();
+      await AppDataSource.manager.save(fb_account); // Save here so media entity can assign to it
     }
 
     // Search all medias belonging to user and delete, repository is the real table itself

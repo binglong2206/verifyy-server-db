@@ -28,17 +28,17 @@ export class IG_account extends BaseEntity {
   @Column({ nullable: true })
   media_count: number;
 
-  @Column({ type: "simple-json" })
+  @Column({ type: "simple-json", nullable: true  })
   demographics: any;
 
-  @Column({ type: "simple-json" })
+  @Column({ type: "simple-json", nullable: true  })
   geographics: any;
 
   @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 
-  @OneToMany(() => IG_media, (media) => media.account)
+  @OneToMany(() => IG_media, (media) => media.account) //{ cascade: ['insert', 'update'] }
   medias: IG_media[];
 
   @CreateDateColumn()

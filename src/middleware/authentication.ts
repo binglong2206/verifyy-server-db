@@ -1,10 +1,8 @@
 import { Response, Request, NextFunction } from "express";
 import { User } from "../entity/User";
-import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken"; // .header.payload.hasedSignature(header + payload + secret)
 import cookie from "cookie";
 import bcrypt from "bcrypt";
-import { SimpleConsoleLogger } from "typeorm";
 import { AppDataSource } from "../data-source";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -97,12 +95,12 @@ export async function signupHandler(
 
     // Sign JWT Token
     const accessToken = jwt.sign(
-      { id: newUser.uuid, username: newUser.username },
+      { id: newUser.id, username: newUser.username },
       process.env.JWT_ACCESS_SECRET as string,
       { expiresIn: "30m" }
     );
     const refreshToken = jwt.sign(
-      { sessionId: 0, id: newUser.uuid, username: newUser.username },
+      { sessionId: 0, id: newUser.id, username: newUser.username },
       process.env.JWT_REFRESH_SECRET as string,
       { expiresIn: "60m" }
     );

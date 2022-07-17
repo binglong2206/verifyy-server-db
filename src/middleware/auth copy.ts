@@ -1,6 +1,5 @@
 import { Response, Request, NextFunction } from "express";
 import { User } from "../entity/User";
-import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken"; // .header.payload.hasedSignature(header + payload + secret)
 
 const isProduction = process.env.NODE_ENV === "production";

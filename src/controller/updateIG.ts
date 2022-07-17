@@ -26,6 +26,7 @@ export async function updateIG(
 
     if (!ig_account) {
       ig_account = new IG_account();
+      await AppDataSource.manager.save(ig_account); // Save here so media entity can assign to it
     }
 
     // Search all medias belonging to user and delete, repository is the real table itself
@@ -48,19 +49,21 @@ export async function updateIG(
       id: id,
     });
 
+
     ig_account.medias = req.body.medias.map(async (e) => {
       const ig_media = new IG_media(); // map & create multiple media entity in array
       ig_media.like_count = e.like_count;
       ig_media.comment_count = e.comments_count;
       ig_media.media_url = e.media_url;
       ig_media.src_url = e.permalink;
-      ig_media.account = ig_account;
+      ig_media.account = ig_account; // This is null cus' account hasnt been saved yet
       await AppDataSource.manager.save(ig_media).then(() => {
         return ig_media;
       });
     });
 
     await AppDataSource.manager.save(ig_account);
+    
 
     console.log("UPDATE IG DONE ", res.locals.id, res.locals.username);
 
