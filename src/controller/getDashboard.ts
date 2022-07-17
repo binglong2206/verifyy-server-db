@@ -15,17 +15,37 @@ export async function getDashboard(
   next: NextFunction
 ) {
   try {
-    const id = parseInt(req.params.id);
+    const userId = parseInt(req.params.id);
+    console.log('USER ID', userId)
 
-    const yt_account = await YT_account.findOneBy({
-      user: {
-        id: id,
+    const yt_account = await YT_account.findOne({
+      where: {
+        user: {id: userId}
       },
+      relations: ['medias']
     });
+
+    const ig_account = await IG_account.findOne({
+      where: {
+        user: {id: userId}
+      },
+      relations: ['medias']
+    })
+
+    const fb_account = await FB_account.findOne({
+      where: {
+        user: {id: userId}
+      },
+      relations: ['medias']
+    })
 
     console.log("ready to send data to dashboard");
 
-    res.json(JSON.stringify(yt_account));
+    res.json(JSON.stringify({
+      yt: yt_account,
+      ig: ig_account,
+      fb: fb_account
+    }));
   } catch (err) {
     next(err);
   }
