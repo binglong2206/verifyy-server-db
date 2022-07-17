@@ -36,9 +36,9 @@ export class YT_media extends BaseEntity {
   })
   account: YT_account;
 
-  @CreateDateColumn()
+  @CreateDateColumn({select: false})
   created: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({select: false})
   updated: Date;
 }

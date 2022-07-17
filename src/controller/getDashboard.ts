@@ -41,11 +41,11 @@ export async function getDashboard(
 
     console.log("ready to send data to dashboard");
 
-    res.json(JSON.stringify({
+    res.json({ // dont need to stringtify
       yt: yt_account,
       ig: ig_account,
       fb: fb_account
-    }));
+    });
   } catch (err) {
     next(err);
   }

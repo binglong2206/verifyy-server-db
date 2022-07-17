@@ -16,7 +16,7 @@ import {
 } from "../middleware/authentication";
 import { verifyCookieJWT, verifyHeaderJWT } from "../middleware/verifyJWT";
 import showUsers from "../controller/showUsers";
-import showData from "../controller/showData";
+import showUserData from "../controller/showData";
 import { authorizationUrl } from "../google";
 import beta_users from "../beta-users";
 import { AppDataSource } from "../data-source";
@@ -135,7 +135,7 @@ router.use("/youtube", verifyHeaderJWT, youtubeRouter);
 router.use("/instagram", verifyHeaderJWT, instagramRouter);
 router.use("/facebook", verifyHeaderJWT, facebookRouter);
 
-router.get("/data", verifyCookieJWT, showData);
+router.get("/data/:id", verifyCookieJWT, showUserData);
 router.get("/users", showUsers);
 router.post("/login", loginHandler);
 router.post("/signup", signupHandler);
