@@ -15,26 +15,39 @@ export default async function aggregateStat(
   next: NextFunction
 ) {
   try {
-    const userId = parseInt(req.params.id);
-    console.log('USER ID', userId)
+    const { id, username } = res.locals; // id & username saved as locals by JWT middleware
 
-    const follower_sum = await AppDataSource.getRepository(User) // Access to real db table
+    const {follower_sum} = await AppDataSource.getRepository(User) // Access to real db table
         .createQueryBuilder("user") // Init query
-        .where('user.id = :id', {id: 2}) // Condition
+        .where('user.id = :id', {id: id}) // Condition
         .leftJoin('user.yt_account', 'yt') // Relations
         .leftJoin('user.ig_account', 'ig') 
         .leftJoin('user.fb_account', 'fb') 
         .select('COALESCE(SUM(COALESCE(yt.follower_count) + COALESCE(ig.follower_count) + COALESCE(fb.follower_count,0)),0)', 'follower_sum') // Operation
         .getRawOne();
 
+    const {media_sum} = await AppDataSource.getRepository(User) // Access to real db table
+        .createQueryBuilder("user") // Init query
+        .where('user.id = :id', {id: id}) // Condition
+        .leftJoin('user.yt_account', 'yt') // Relations
+        .leftJoin('user.ig_account', 'ig') 
+        .leftJoin('user.fb_account', 'fb') 
+        .select('COALESCE(SUM(COALESCE(yt.media_count, 0) + COALESCE(ig.media_count, 0) + COALESCE(fb.media_count,0)),0)', 'media_sum') // Operation
+        .getRawOne();
 
-
-    res.json({
-      user: user,
-      // yt: yt_account,
-      // ig: ig_account,
-      // fb: fb_account
+        
+    const account_stat = await Account_stat.findOne({
+      where: {
+        user: {id: id}
+      }
     });
+    account_stat.follower_count = follower_sum;
+    account_stat.media_count = media_sum;
+
+
+    await AppDataSource.manager.save(account_stat).then(()=>res.end())
+
+
   } catch (err) {
     next(err);
   }

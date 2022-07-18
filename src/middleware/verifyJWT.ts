@@ -24,7 +24,6 @@ export function verifyCookieJWT(
   const session = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
   res.locals.id = access.id;
   res.locals.username = access.username;
-  console.log("VERIFIED COOKIE");
 
   next();
 }

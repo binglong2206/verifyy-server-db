@@ -63,9 +63,7 @@ export async function updateYT(
 
     await AppDataSource.manager.save(yt_account);
 
-    const follower_sum = await aggregateStat(2);
 
-    console.log("UPDATE YOUTUBE DONE ", res.locals.id, res.locals.username);
 
     next();
   } catch (err) {
