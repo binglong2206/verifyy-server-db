@@ -8,6 +8,8 @@ import { IG_media } from "../entity/IG_media";
 import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
 import { AppDataSource } from "../data-source";
+import { parseDemoIG } from "../utils/parseDemo";
+import { parseGeoIG } from "../utils/parseGeo";
 
 export async function updateIG(
   req: Request,
@@ -43,8 +45,8 @@ export async function updateIG(
     ig_account.username = req.body.username;
     ig_account.follower_count = req.body.follower_count;
     ig_account.media_count = req.body.media_count;
-    ig_account.demographics = req.body.demographics; // no need to json stringify
-    ig_account.geographics = req.body.geographics; // insert as object, but stored as json
+    ig_account.demographics = parseDemoIG(req.body.demographics); // no need to json stringify
+    ig_account.geographics = parseGeoIG(req.body.geographics); // insert as object, but stored as json
     ig_account.user = await User.findOneBy({
       id: id,
     });

@@ -10,6 +10,8 @@ import { YT_media } from "../entity/YT_media";
 import { AppDataSource } from "../data-source";
 import { appendFile } from "fs";
 import aggregateStat from "./aggregateStat";
+import { parseDemoYT } from "../utils/parseDemo";
+import { parseGeoYT } from "../utils/parseGeo";
 
 export async function updateYT(
   req: Request,
@@ -46,8 +48,8 @@ export async function updateYT(
     yt_account.follower_count = req.body.follower_count;
     yt_account.view_count = req.body.view_count;
     yt_account.media_count = req.body.media_count;
-    yt_account.demographics = req.body.demographics; // no need to json stringify
-    yt_account.geographics = req.body.geographics; // insert as object, but stored as json
+    yt_account.demographics = parseDemoYT(req.body.demographics); // no need to json stringify
+    yt_account.geographics = parseGeoYT(req.body.geographics); // insert as object, but stored as json
     yt_account.user = await User.findOneBy({
       id: id,
     });

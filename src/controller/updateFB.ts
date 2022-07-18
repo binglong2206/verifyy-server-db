@@ -8,6 +8,9 @@ import { IG_media } from "../entity/IG_media";
 import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
 import { AppDataSource } from "../data-source";
+import { parseDemoFB } from "../utils/parseDemo";
+import { parseGeoFB } from "../utils/parseGeo";
+
 
 export async function updateFB(
   req: Request,
@@ -43,8 +46,8 @@ export async function updateFB(
     fb_account.follower_count = req.body.follower_count;
     fb_account.like_count = req.body.like_count;
     fb_account.media_count = req.body.media_count;
-    fb_account.demographics = req.body.demographics; // no need to json stringify
-    fb_account.geographics = req.body.geographics; // insert as object, but stored as json
+    fb_account.demographics = parseDemoFB(req.body.demographics); // no need to json stringify
+    fb_account.geographics = parseGeoFB(req.body.geographics); // insert as object, but stored as json
     fb_account.user = await User.findOneBy({
       id: id,
     });
