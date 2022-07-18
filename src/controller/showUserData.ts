@@ -52,10 +52,9 @@ export default async function showUserData(
         .createQueryBuilder("user") // Init query
         .where('user.id = :id', {id: 2}) // Condition
         .leftJoin('user.yt_account', 'yt') // Relations
-        .leftJoin('user.ig_account', 'ig') // Relations
-        .leftJoin('user.fb_account', 'fb') // Relations
-
-        .select('SUM(yt.follower_count + ig.follower_count + fb.follower_count)', 'follower_sum') // Operation
+        .leftJoin('user.ig_account', 'ig') 
+        .leftJoin('user.fb_account', 'fb') 
+        .select('COALESCE(SUM(COALESCE(yt.follower_count) + COALESCE(ig.follower_count) + COALESCE(fb.follower_count,0)),0)', 'follower_sum') // Operation
         .getRawOne();
 
         console.log(sum)

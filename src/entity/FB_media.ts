@@ -35,7 +35,7 @@ export class FB_media extends BaseEntity {
   @Column({ nullable: true })
   impression_count: string;
 
-  @ManyToOne(() => FB_account, (FB_account) => FB_account.medias)
+  @ManyToOne(() => FB_account, (FB_account) => FB_account.medias, {onDelete: 'CASCADE'})
   account: FB_account;
 
   @CreateDateColumn()
