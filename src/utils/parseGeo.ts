@@ -4,7 +4,7 @@ interface YT_geo {
 
 }
 
-const sampleIGDemo = [
+const sampleYTGeo = [
     ["JP", 40109, 58446, 87, 42.46, 0],
     ["KR", 35181, 49166, 83, 42.22, 0],
     ["US", 23599, 31967, 81, 38.19, 0],
