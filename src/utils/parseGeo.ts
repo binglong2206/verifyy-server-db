@@ -1,19 +1,62 @@
-type YT_geo_raw = [string, number, number, number, number, number][];
-
+type YT_geo_raw = [string,number][];
 interface YT_geo {
-
+    [key: string]: number
 }
 
-const sampleYTGeo = [
-    ["JP", 40109, 58446, 87, 42.46, 0],
-    ["KR", 35181, 49166, 83, 42.22, 0],
-    ["US", 23599, 31967, 81, 38.19, 0],
-    ["PH", 6743, 9603, 85, 47.53, 0],
-    ["TH", 5831, 8689, 91, 41.06, 0],
-    ["ID", 5148, 7960, 92, 43.66, 0]]
+export const parseGeoYT = (data: YT_geo_raw): YT_geo => {
+    let holder = {};
+    let total_views = 0;
 
+    for (let [country,views] of data) { // For..of iterate over elements, for...in uses just keys
+        holder[country] = views            // key in array is just index key of the elemnt
+        total_views +=views
+    };
 
+    for (let key in holder) { 
+        holder[key] = (holder[key] / total_views) * 100
+    }
+    return holder
+};
 
-export function parseYTGeo(data: YT_geo_raw): YT_geo {
-    return {}
+interface IG_geo {
+    [key: string]: number
 }
+
+
+export const parseGeoIG = (data: IG_geo): IG_geo => {
+    let holder = {};
+    let follower_count = 0;
+
+    for (let [country, value] of Object.entries(data)) {
+        holder[country] = value;
+        follower_count += value
+    };
+
+    for (let [country, value] of Object.entries(holder)) {
+        holder[country] = (holder[country] / follower_count )* 100
+    };
+    
+    console.log(holder)
+    return holder
+};
+
+
+interface FB_geo {
+    [key:string]:number
+}
+export const parseGeoFB = (data: FB_geo): FB_geo => {
+    let holder = {};
+    let follower_count = 0;
+
+    for (let [country, value] of Object.entries(data)) {
+        holder[country] = value;
+        follower_count += value
+    };
+
+    for (let [country, value] of Object.entries(holder)) {
+        holder[country] = (holder[country] / follower_count )* 100
+    };
+    
+    return holder
+}
+

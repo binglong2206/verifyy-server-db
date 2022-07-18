@@ -237,9 +237,6 @@ const parseDemoFB = (data) => {
 
 
 
-// parseDemoYT(sampleYTDemo)
-// parseDemoIG(sampleIGDemo)
-// parseDemoFB(sampleFBDemo)
 
 
 
@@ -415,6 +412,3 @@ const parseGeoFB = (data) => {
 return holder
 }
 
-// parseGeoYT(yt_geo)
-// parseGeoIG(ig_geo);
-parseGeoFB(fb_geo)
