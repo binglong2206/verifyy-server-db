@@ -9,6 +9,7 @@ import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
 import { AppDataSource } from "../data-source";
 import { appendFile } from "fs";
+import aggregateStat from "./aggregateStat";
 
 export async function updateYT(
   req: Request,
@@ -57,15 +58,16 @@ export async function updateYT(
       yt_media.like_count = e.like_count;
       yt_media.comment_count = e.comment_count;
       yt_media.account = yt_account;
-      console.log(yt_account)
       await AppDataSource.manager.save(yt_media);
     });
 
     await AppDataSource.manager.save(yt_account);
 
+    const follower_sum = await aggregateStat(2);
+
     console.log("UPDATE YOUTUBE DONE ", res.locals.id, res.locals.username);
 
-    res.end();
+    next();
   } catch (err) {
     next(err);
   }

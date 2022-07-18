@@ -66,7 +66,7 @@ export async function updateFB(
 
     console.log("UPDATE FB DONE ", res.locals.id, res.locals.username);
 
-    res.end();
+    next()
   } catch (err) {
     next(err);
   }

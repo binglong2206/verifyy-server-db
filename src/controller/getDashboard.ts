@@ -16,7 +16,12 @@ export async function getDashboard(
 ) {
   try {
     const userId = parseInt(req.params.id);
-    console.log('USER ID', userId)
+
+    const account_stat = await Account_stat.findOne({
+      where: {
+        user: {id: userId}
+      }
+    })
 
     const yt_account = await YT_account.findOne({
       where: {
@@ -42,6 +47,7 @@ export async function getDashboard(
     console.log("ready to send data to dashboard");
 
     res.json({ // dont need to stringtify
+      stat: account_stat,
       yt: yt_account,
       ig: ig_account,
       fb: fb_account

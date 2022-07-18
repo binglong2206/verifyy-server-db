@@ -9,7 +9,7 @@ import { YT_account } from "../entity/YT_account";
 import { YT_media } from "../entity/YT_media";
 import { AppDataSource } from "../data-source";
 
-export default async function showUserData(
+export default async function aggregateStat(
   req: Request,
   res: Response,
   next: NextFunction
@@ -18,36 +18,6 @@ export default async function showUserData(
     const userId = parseInt(req.params.id);
     console.log('USER ID', userId)
 
-    const user = await User.findOne({
-      where: {
-        id: userId
-      },
-      relations: ['yt_account', 'ig_account', 'fb_account']
-      
-    })
-
-    const yt_account = await YT_account.findOne({
-      where: {
-        user: {id: userId}
-      },
-      relations: ['medias']
-    });
-
-    const ig_account = await IG_account.findOne({
-      where: {
-        user: {id: userId}
-      },
-      relations: ['medias']
-    })
-
-    const fb_account = await FB_account.findOne({
-      where: {
-        user: {id: userId}
-      },
-      relations: ['medias']
-    })
-
-    
     const follower_sum = await AppDataSource.getRepository(User) // Access to real db table
         .createQueryBuilder("user") // Init query
         .where('user.id = :id', {id: 2}) // Condition

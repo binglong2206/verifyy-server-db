@@ -67,8 +67,8 @@ export async function updateIG(
 
     console.log("UPDATE IG DONE ", res.locals.id, res.locals.username);
 
-    res.end();
-  } catch (err) {
+    next()  
+} catch (err) {
     next(err);
   }
 }
