@@ -36,7 +36,6 @@ export const parseGeoIG = (data: IG_geo): IG_geo => {
         holder[country] = (holder[country] / follower_count )* 100
     };
     
-    console.log(holder)
     return holder
 };
 

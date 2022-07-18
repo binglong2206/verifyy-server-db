@@ -23,11 +23,11 @@ export class Account_stat extends BaseEntity {
   @Column({nullable: true})
   media_count: number;
 
-  @Column({type: 'simple-json', nullable: true})
-  demographics: any;
+  // @Column({type: 'simple-json', nullable: true})
+  // demographics: any;
 
-  @Column({type: 'simple-json', nullable: true})
-  geographics: any;
+  // @Column({type: 'simple-json', nullable: true})
+  // geographics: any;
 
   // cascade allows u to save with this entity and auto create the referenced entity: User
   @OneToOne(() => User, { onDelete: "CASCADE" }) // Cascade: true
