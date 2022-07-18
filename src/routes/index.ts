@@ -16,7 +16,7 @@ import {
 } from "../middleware/authentication";
 import { verifyCookieJWT, verifyHeaderJWT } from "../middleware/verifyJWT";
 import showUsers from "../controller/showUsers";
-import showUserData from "../controller/showData";
+import showUserData from "../controller/showUserData";
 import { authorizationUrl } from "../google";
 import beta_users from "../beta-users";
 import { AppDataSource } from "../data-source";
@@ -134,17 +134,13 @@ router.use("/dashboard", verifyCookieJWT, dashboardRouter);
 router.use("/youtube", verifyHeaderJWT, youtubeRouter);
 router.use("/instagram", verifyHeaderJWT, instagramRouter);
 router.use("/facebook", verifyHeaderJWT, facebookRouter);
+router.get("/data/:id", showUserData);
 
-router.get("/data/:id", verifyCookieJWT, showUserData);
 router.get("/users", showUsers);
 router.post("/login", loginHandler);
 router.post("/signup", signupHandler);
 router.delete("/logout", logoutHandler);
 
-router.get("/restricted", verifyCookieJWT);
 
-router.get("/google", (req: Request, res: Response, next: NextFunction) => {
-  res.redirect(authorizationUrl);
-});
 
 export default router;

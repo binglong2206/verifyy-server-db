@@ -42,9 +42,9 @@ export async function updateYT(
     if (medias) mediaRepository.remove(medias);
 
     // Insert from req.body
-    yt_account.subscriber_count = req.body.subscriber_count;
+    yt_account.follower_count = req.body.follower_count;
     yt_account.view_count = req.body.view_count;
-    yt_account.upload_count = req.body.upload_count;
+    yt_account.media_count = req.body.media_count;
     yt_account.demographics = req.body.demographics; // no need to json stringify
     yt_account.geographics = req.body.geographics; // insert as object, but stored as json
     yt_account.user = await User.findOneBy({

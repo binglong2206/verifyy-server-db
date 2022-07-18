@@ -18,6 +18,14 @@ export default async function showUserData(
     const userId = parseInt(req.params.id);
     console.log('USER ID', userId)
 
+    const user = await User.findOne({
+      where: {
+        id: userId
+      },
+      relations: ['yt_account', 'ig_account', 'fb_account']
+      
+    })
+
     const yt_account = await YT_account.findOne({
       where: {
         user: {id: userId}
@@ -39,12 +47,26 @@ export default async function showUserData(
       relations: ['medias']
     })
 
-    console.log("ready to send data to dashboard");
+    
+    const sum = await AppDataSource.getRepository(User) // Access to real db table
+        .createQueryBuilder("user") // Init query
+        .where('user.id = :id', {id: 2}) // Condition
+        .leftJoin('user.yt_account', 'yt') // Relations
+        .leftJoin('user.ig_account', 'ig') // Relations
+        .leftJoin('user.fb_account', 'fb') // Relations
+
+        .select('SUM(yt.follower_count + ig.follower_count + fb.follower_count)', 'follower_sum') // Operation
+        .getRawOne();
+
+        console.log(sum)
+
+
 
     res.json({
-      yt: yt_account,
-      ig: ig_account,
-      fb: fb_account
+      user: user,
+      // yt: yt_account,
+      // ig: ig_account,
+      // fb: fb_account
     });
   } catch (err) {
     next(err);

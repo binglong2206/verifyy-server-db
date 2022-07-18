@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"; // .header.payload.hasedSignature(header + paylo
 import cookie from "cookie";
 import bcrypt from "bcrypt";
 import { AppDataSource } from "../data-source";
+import { Account_stat } from "../entity/Account_stat";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -92,6 +93,9 @@ export async function signupHandler(
     newUser.hashed_password = hashed;
 
     await AppDataSource.manager.save(newUser);
+    const account_stat = new Account_stat();
+    account_stat.user = newUser;
+    await AppDataSource.manager.save(account_stat)
 
     // Sign JWT Token
     const accessToken = jwt.sign(

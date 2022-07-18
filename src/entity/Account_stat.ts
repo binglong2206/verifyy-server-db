@@ -17,8 +17,17 @@ export class Account_stat extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
-  impressions: number;
+  // @Column()
+  // follower_count: number;
+
+  // @Column()
+  // media_count: number;
+
+  // @Column()
+  // demographics: any;
+
+  // @Column()
+  // geographics: any;
 
   // cascade allows u to save with this entity and auto create the referenced entity: User
   @OneToOne(() => User, { onDelete: "CASCADE" }) // Cascade: true

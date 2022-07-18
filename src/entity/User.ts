@@ -6,7 +6,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Generated,
+  OneToOne,
 } from "typeorm";
+import { FB_account } from "./FB_account";
+import { YT_account } from "./YT_account";
+import { IG_account } from "./IG_account";
 
 @Entity()
 export class User extends BaseEntity {
@@ -28,6 +32,15 @@ export class User extends BaseEntity {
 
   @Column({ unique: true, nullable: true })
   email: string;
+
+  @OneToOne(() => YT_account, (yt_account) => yt_account.user)
+  yt_account: YT_account
+
+  @OneToOne(() => IG_account, (yt_account) => yt_account.user)
+  ig_account: IG_account
+
+  @OneToOne(() => FB_account, (yt_account) => yt_account.user)
+  fb_account: FB_account
 
   @CreateDateColumn()
   created: Date;
