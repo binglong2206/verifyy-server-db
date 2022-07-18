@@ -27,9 +27,9 @@ export default async function aggregateStat(
         .getRawOne();
 
     const {media_sum} = await AppDataSource.getRepository(User) // Access to real db table
-        .createQueryBuilder("user") // Init query
-        .where('user.id = :id', {id: id}) // Condition
-        .leftJoin('user.yt_account', 'yt') // Relations
+        .createQueryBuilder("user") 
+        .where('user.id = :id', {id: id}) 
+        .leftJoin('user.yt_account', 'yt') 
         .leftJoin('user.ig_account', 'ig') 
         .leftJoin('user.fb_account', 'fb') 
         .select('COALESCE(SUM(COALESCE(yt.media_count, 0) + COALESCE(ig.media_count, 0) + COALESCE(fb.media_count,0)),0)', 'media_sum') // Operation

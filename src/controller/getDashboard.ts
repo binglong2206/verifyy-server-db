@@ -44,7 +44,7 @@ export async function getDashboard(
       relations: ['medias']
     })
 
-    console.log("ready to send data to dashboard");
+    console.log("Sending dashboard data to client");
 
     res.json({ // dont need to stringtify
       stat: account_stat,
