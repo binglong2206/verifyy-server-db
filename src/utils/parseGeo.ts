@@ -22,7 +22,6 @@ interface IG_geo {
     [key: string]: number
 }
 
-
 export const parseGeoIG = (data: IG_geo): IG_geo => {
     let holder = {};
     let follower_count = 0;

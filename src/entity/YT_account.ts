@@ -34,6 +34,9 @@ export class YT_account extends BaseEntity {
   @Column({ type: "simple-json", nullable: true })
   geographics: any;
 
+  @Column({ type: "simple-array", nullable: true })
+  data_intervals: any;
+
   @OneToOne(() => User, (user) => user.yt_account  ,{ onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
