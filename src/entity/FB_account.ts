@@ -34,6 +34,9 @@ export class FB_account extends BaseEntity {
   @Column({ type: "simple-json", nullable: true })
   geographics: any;
 
+  @Column({ type: "simple-array", nullable: true })
+  data_intervals: any;
+
   @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
