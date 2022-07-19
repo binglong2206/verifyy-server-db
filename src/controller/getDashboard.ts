@@ -45,7 +45,6 @@ export async function getDashboard(
     })
 
     console.log("Sending dashboard data to client");
-
     res.json({ // dont need to stringtify
       stat: account_stat,
       yt: yt_account,

@@ -5,7 +5,7 @@ interface YT_geo {
 
 export const parseGeoYT = (data: YT_geo_raw): YT_geo => {
     let holder = {};
-    let total_views = 0;
+    let total_views = 1;
 
     for (let [country,views] of data) { // For..of iterate over elements, for...in uses just keys
         holder[country] = views            // key in array is just index key of the elemnt

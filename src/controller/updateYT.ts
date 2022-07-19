@@ -50,6 +50,7 @@ export async function updateYT(
     yt_account.media_count = req.body.media_count;
     yt_account.demographics = parseDemoYT(req.body.demographics); // no need to json stringify
     yt_account.geographics = parseGeoYT(req.body.geographics); // insert as object, but stored as json
+    yt_account.data_intervals = req.body.data_intervals;
     yt_account.user = await User.findOneBy({
       id: id,
     });
@@ -65,6 +66,7 @@ export async function updateYT(
 
     await AppDataSource.manager.save(yt_account);
 
+    console.log("UPDATE Fb DONE ", res.locals.id, res.locals.username);
 
 
     next();

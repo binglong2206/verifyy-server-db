@@ -47,6 +47,7 @@ export async function updateIG(
     ig_account.media_count = req.body.media_count;
     ig_account.demographics = parseDemoIG(req.body.demographics); // no need to json stringify
     ig_account.geographics = parseGeoIG(req.body.geographics); // insert as object, but stored as json
+    ig_account.data_intervals = req.body.data_intervals;
     ig_account.user = await User.findOneBy({
       id: id,
     });
