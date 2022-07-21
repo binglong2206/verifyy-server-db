@@ -26,6 +26,7 @@ import youtubeRouter from "./youtube";
 import instagramRouter from "./instagram";
 import facebookRouter from "./facebook";
 import dashboardRouter from "./dashboard";
+import oauthRouter from './oauth'
 
 const router = express.Router();
 
@@ -130,8 +131,10 @@ router.get(
   }
 );
 
+
+router.use('/oauth', oauthRouter)
 router.use("/dashboard", verifyCookieJWT, dashboardRouter);
-router.use("/youtube", verifyHeaderJWT, youtubeRouter);
+router.use("/youtube", verifyCookieJWT, youtubeRouter);
 router.use("/instagram", verifyHeaderJWT, instagramRouter);
 router.use("/facebook", verifyHeaderJWT, facebookRouter);
 router.get("/data/:id", showUserData);

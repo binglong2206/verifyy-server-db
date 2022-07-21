@@ -59,7 +59,7 @@ export async function loginHandler(
         path: "/",
       }),
     ]);
-
+    console.log('Logged in as', user.id, user.username)
     res.end();
   } catch (err) {
     console.error(err);

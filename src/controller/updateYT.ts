@@ -66,7 +66,7 @@ export async function updateYT(
 
     await AppDataSource.manager.save(yt_account);
 
-    console.log("UPDATE Fb DONE ", res.locals.id, res.locals.username);
+    console.log("UPDATE YT DONE ", res.locals.id, res.locals.username);
 
 
     next();
