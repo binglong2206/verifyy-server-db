@@ -5,63 +5,73 @@ import aggregateStat from "../controller/aggregateStat";
 import { ConnectionIsNotSetError } from "typeorm";
 import cookie from "cookie";
 import axios from "axios";
+import fetch from "node-fetch";
+import { ytURL, getCode, getAccessToken, fetchBasicStat, fetchDemoGeo, fetchIntervalData, postYTData } from "../utils/youtube_utils";
+import { YT_data } from "../types/youtubeTypes";
+
 const router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
   res.send("OAuth API homepage");
 });
 
+router.get('/youtube/redirect', (req: Request, res: Response) => {
+  const {accessToken, refreshToken} = cookie.parse(req.headers.cookie)
+  const csrfState = Math.random().toString(36).substring(2);
+  res.setHeader("Set-Cookie", [
+    cookie.serialize("yt_csrf", csrfState, { maxAge: 300 }),
+    cookie.serialize("web_accessToken", accessToken as string, {
+      maxAge: 300,
+    }),
+    cookie.serialize("web_refreshToken", refreshToken as string, {
+      maxAge: 300,
+    }),
+  ]);
 
-router.get('/youtube', (req: Request, res: Response) => {
+  let url = ytURL;
+  url += csrfState;
 
-    let url = "https://accounts.google.com/o/oauth2/v2/auth";
-
-    url += `?client_id=${process.env.YT_CLIENT_ID}`;
-    url += "&redirect_uri=http://localhost:8000/oauth/youtube/response";
-    url += "&response_type=code";
-    url +=
-      "&scope=https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/youtube.readonly";
-    url += "&include_granted_scopes=true";
-    url += "&state=" + 'CSRFSTATE';
-  
-    res.redirect(url);
-});
-
-router.get('/nihao', (req: Request, res: Response) => {
-    console.log('ni hao cookie')
-    res.json({hello: 'world'})
-
+  res.redirect(url)
 })
 
-router.get('/youtube/response', async (req: Request, res: Response) => {
-    // Get Code
-    const code = req.url
-    ?.substring(req.url?.indexOf("&code="), req.url?.indexOf("&scope="))
-    .split("code=")[1];
-
-   // Get Access Token
+router.get('/youtube', async (req: Request, res: Response, next: NextFunction) => {
    try{ 
-    const yt_accessToken = await axios.post(
-      `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.YT_CLIENT_ID}&client_secret=${process.env.YT_CLIENT_SECRET}&redirect_uri=http://localhost:8000/oauth/youtube/response&grant_type=authorization_code`
-    ).then(r=> r.data.access_token);
     
-    const channelStats = await axios.get(
-    `https://youtube.googleapis.com/youtube/v3/channels?mine=true&part=snippet,contentDetails,statistics&access_token=${yt_accessToken}`
-  ).then((r) => r.data.items);
-  const { viewCount, subscriberCount, videoCount } =
-    channelStats[0].statistics;
+    // Get Code
+    const code = await getCode(req.url)
+    
+    // Get Access Token
+    const yt_accessToken = await getAccessToken(code);
 
-    console.log(viewCount,subscriberCount,videoCount)
+   // lifetime basic stats, and latest 5 videos stat
+   const {viewCount, subscriberCount, videoCount, videoObjects} = await fetchBasicStat(yt_accessToken);
+
+   // lifetime demographcis & geographics
+   const {demographics, geographics} = await fetchDemoGeo(yt_accessToken);
+
+   // day/week/28 for views, likes, subsGained
+   const data_intervals  = await fetchIntervalData(yt_accessToken);
+
+  // Organize all data into single object
+    const organized_data: YT_data = {
+      follower_count: subscriberCount,
+      view_count: viewCount,
+      media_count: videoCount,
+      demographics: demographics,         
+      geographics: geographics,                 
+      medias: videoObjects,
+      data_intervals: data_intervals,
+    };
+
+ // Post data as json to DB's controller
+    await postYTData(organized_data, req.headers.cookie).then(()=> {res.redirect('http://localhost:3000')})
     
-   } catch(e) {
-    console.error(e)
+   } catch(err) {
+    console.error(err);
+    return next(err)
    }
-  
-
-    res.redirect('http://localhost:3000/redirect_edit')
-})
+  })
 
 
-router.post("/update", updateYT, aggregateStat);
 
 export default router;

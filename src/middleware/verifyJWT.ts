@@ -34,7 +34,7 @@ export function verifyHeaderJWT(
   res: Response,
   next: NextFunction
 ) {
-  const auth = JSON.parse(req.headers.authorization);
+  const auth = cookie.parse(req.headers.authorization);
   const { web_accessToken, web_refreshToken } = auth;
 
   const access = jwt.verify(

@@ -22,18 +22,11 @@ AppDataSource.initialize()
     // Init
     const app = express();
 
-    // Security Middleware
-    // app.use(
-    //   cors({
-    //     origin: "http://localhost:3000",
-    //     credentials: true,
-    //   })
-    // );
-
+    // Security Middleware=
     app.use(
       cors({
         credentials: true,
-        origin: 'localhost:3000'
+        origin: 'http://localhost:1000'
       })
     );
 
@@ -70,7 +63,7 @@ AppDataSource.initialize()
       ) => {
         console.error("MY OWN ERROR HANDLER");
         console.error(err);
-        res.status(400).send("MY OWN ERROR HANDLER");
+        res.status(400).end()
       }
     );
 
