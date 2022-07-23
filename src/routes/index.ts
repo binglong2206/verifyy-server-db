@@ -135,8 +135,8 @@ router.get(
 router.use('/oauth', oauthRouter)
 router.use("/dashboard", verifyCookieJWT, dashboardRouter);
 router.use("/youtube", youtubeRouter);
-router.use("/instagram", verifyHeaderJWT, instagramRouter);
-router.use("/facebook", verifyHeaderJWT, facebookRouter);
+router.use("/instagram", instagramRouter);
+router.use("/facebook", facebookRouter);
 router.get("/data/:id", showUserData);
 
 router.get("/users", showUsers);

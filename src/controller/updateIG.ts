@@ -10,6 +10,9 @@ import { YT_media } from "../entity/YT_media";
 import { AppDataSource } from "../data-source";
 import { parseDemoIG } from "../utils/parseDemo";
 import { parseGeoIG } from "../utils/parseGeo";
+import timestamp from 'unix-timestamp';
+
+
 
 export async function updateIG(
   req: Request,
@@ -17,6 +20,7 @@ export async function updateIG(
   next: NextFunction
 ) {
   try {
+    console.log('START UPDATEING DATABSE')
     const { id, username } = res.locals; // id & username saved as locals by JWT middleware
 
     // Check if ig_account exist

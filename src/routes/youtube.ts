@@ -15,8 +15,7 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 
-router.get('/redirect', (req: Request, res: Response) => {
-  console.log("THIS ONE", cookie.parse(req.headers.cookie))
+router.get('/redirect', verifyCookieJWT ,(req: Request, res: Response) => {
   const {accessToken, refreshToken} = cookie.parse(req.headers.cookie)
   const csrfState = Math.random().toString(36).substring(2);
   res.setHeader("Set-Cookie", [
