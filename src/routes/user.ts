@@ -30,7 +30,7 @@ router.post('/profile', async (req:Request, res: Response, next: NextFunction) =
             },
             ()=> {
                 getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                    console.log(url)
+                  res.locals.url = url
                 })
             }
           )
@@ -67,7 +67,7 @@ router.post('/background', (req:Request, res: Response, next: NextFunction) => {
             },
             ()=> {
                 getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                    console.log(url)
+                    res.locals.url = url
                 })
             }
           )
