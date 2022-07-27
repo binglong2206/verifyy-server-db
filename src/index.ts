@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import indexRouter from "./routes";
 import cors from "cors";
+import fileupload from 'express-fileupload'
 const isProduction = process.env.NODE_ENV === "production";
 
 // Init
@@ -44,6 +45,7 @@ AppDataSource.initialize()
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static(path.join(__dirname, "public"))); // Serve all files in url -> localhost:3000/dog.jpg
+    app.use(fileupload()) 
 
     // Main routing
     app.use("/", indexRouter);

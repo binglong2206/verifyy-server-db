@@ -27,6 +27,7 @@ import instagramRouter from "./instagram";
 import facebookRouter from "./facebook";
 import dashboardRouter from "./dashboard";
 import oauthRouter from './oauth'
+import userRouter from './user'
 import { checkUser } from "../middleware/checkUser";
 
 const router = express.Router();
@@ -139,6 +140,7 @@ router.use("/youtube", youtubeRouter);
 router.use("/instagram", instagramRouter);
 router.use("/facebook", facebookRouter);
 router.get('/checkUser/:username', checkUser);
+router.use('/user', userRouter);
 
 
 router.get("/data/:id", showUserData);
