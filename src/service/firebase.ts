@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/compatauth";
-import "firebase/storage";
+import { getStorage, ref } from "firebase/storage";
 
 // Public API
 const firebaseConfig = {
@@ -13,6 +13,8 @@ const firebaseConfig = {
   };
 
 
-firebase.initializeApp(firebaseConfig);
-const firebaseSDK = firebase;
-export default firebaseSDK;
+const app = firebase.initializeApp(firebaseConfig);
+
+export const firebaseSDK = firebase;
+export const storage = getStorage(app);
+
