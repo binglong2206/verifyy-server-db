@@ -17,10 +17,6 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @Column()
-  // @Generated("uuid")
-  // uuid: string;
-
   @Column({ nullable: true })
   firstname: string;
 
@@ -32,6 +28,12 @@ export class User extends BaseEntity {
 
   @Column({ unique: true, nullable: true })
   email: string;
+
+  @Column({nullable: true })
+  profile_image: string;
+
+  @Column({nullable: true })
+  background_image: string;
 
   @OneToOne(() => YT_account, (yt_account) => yt_account.user)
   yt_account: YT_account
