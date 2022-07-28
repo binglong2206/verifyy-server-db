@@ -7,6 +7,12 @@ interface AccessLoad {
   username: string;
 }
 
+interface RefreshLoad {
+  sessionId: number;
+  id: number;
+  username: string;
+}
+
 // NextJS already verified refresh&access. Just do both again.
 export function verifyCookieJWT(
   req: Request,
@@ -16,12 +22,29 @@ export function verifyCookieJWT(
   const cookies = cookie.parse(req.headers.cookie);
   const { accessToken, refreshToken } = cookies;
 
-  // jwt.verify will auto throw error to next(err) if fail
-  const access = jwt.verify(
-    accessToken,
-    process.env.JWT_ACCESS_SECRET
-  ) as AccessLoad;
-  const session = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+  // If refresh fails, then JWT error will be thrown to default error handler
+  const session = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET) as RefreshLoad;
+  
+  // Set new accessToken if expired and refresh token still valid
+  if (!accessToken) {
+    const newToken = jwt.sign(
+      { id: session.id, username: session.username},
+      process.env.JWT_ACCESS_SECRET as string,
+      { expiresIn: "30m" }
+    );
+    res.setHeader("Set-Cookie", 
+      cookie.serialize("accessToken", newToken, {
+        maxAge: 3000,
+        httpOnly: true,
+        sameSite: true,
+        secure: true,
+        path: "/",
+      }))
+  }
+
+  // if Access Token not expired, then verify normally 
+  const access = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET) as AccessLoad;
+
   res.locals.id = access.id;
   res.locals.username = access.username;
   console.log('VERIFY COOKIE DONE')
