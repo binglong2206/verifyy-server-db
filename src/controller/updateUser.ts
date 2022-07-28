@@ -14,7 +14,7 @@ import timestamp from 'unix-timestamp';
 
 
 
-export async function updateProfile(
+export async function updateProfileImage(
   req: Request,
   res: Response,
   next: NextFunction
@@ -29,7 +29,10 @@ export async function updateProfile(
 
    user.profile_image = url;
 
-   await AppDataSource.manager.save(user)
+   await AppDataSource.manager.save(user).then(()=> {
+    console.log('profile upload done');
+    res.end();
+   })
 
 } catch (err) {
     next(err);
@@ -37,7 +40,7 @@ export async function updateProfile(
 };
 
 
-export async function updateBackground(
+export async function updateBackgroundImage(
     req: Request,
     res: Response,
     next: NextFunction
@@ -52,7 +55,10 @@ export async function updateBackground(
   
      user.background_image = url;
   
-     await AppDataSource.manager.save(user)
+     await AppDataSource.manager.save(user).then(()=> {
+        console.log('background upload done');
+        res.end();
+     })
      
   } catch (err) {
       next(err);

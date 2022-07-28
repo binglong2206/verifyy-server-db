@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { storage } from '../service/firebase'; 
 import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { updateBackgroundImage, updateProfileImage } from '../controller/updateUser';
 const router = express.Router();
 
 interface Locals{
@@ -30,9 +31,8 @@ router.post('/profile', async (req:Request, res: Response, next: NextFunction) =
             },
             ()=> {
                 getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                  // res.locals.url = url
-                  console.log('DONE', url);
-                  res.end();
+                  res.locals.url = url
+                  next();
                 })
             }
           );
@@ -43,7 +43,7 @@ router.post('/profile', async (req:Request, res: Response, next: NextFunction) =
         console.error(err);
         next(err)
     }
-})
+}, updateProfileImage)
 
 
 
@@ -69,9 +69,8 @@ router.post('/background', async (req:Request, res: Response, next: NextFunction
           },
           ()=> {
               getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                // res.locals.url = url
-                console.log('DONE BACKGROUND UPLOAD', url);
-                res.end();
+                res.locals.url = url
+                next();
               })
           }
         );
@@ -82,7 +81,7 @@ router.post('/background', async (req:Request, res: Response, next: NextFunction
       console.error(err);
       next(err)
   }
-})
+}, updateBackgroundImage)
 
 
 export default router
