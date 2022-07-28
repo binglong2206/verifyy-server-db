@@ -21,15 +21,15 @@ export async function updateProfileImage(
 ) {
   try {
    const {id, username, url} = res.locals;
-   const user = await User.findOne({
+   const account = await Account_stat.findOne({
     where: {
         id: id
     }
    });
 
-   user.profile_image = url;
+   account.profile_image = url;
 
-   await AppDataSource.manager.save(user).then(()=> {
+   await AppDataSource.manager.save(account).then(()=> {
     console.log('profile upload done');
     res.end();
    })
@@ -47,15 +47,15 @@ export async function updateBackgroundImage(
   ) {
     try {
      const {id, username, url} = res.locals;
-     const user = await User.findOne({
+     const account = await Account_stat.findOne({
       where: {
           id: id
       }
      });
   
-     user.background_image = url;
+     account.background_image = url;
   
-     await AppDataSource.manager.save(user).then(()=> {
+     await AppDataSource.manager.save(account).then(()=> {
         console.log('background upload done');
         res.end();
      })

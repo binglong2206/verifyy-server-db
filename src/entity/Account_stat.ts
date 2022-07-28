@@ -23,6 +23,13 @@ export class Account_stat extends BaseEntity {
   @Column({nullable: true})
   media_count: number;
 
+  @Column({nullable: true })
+  profile_image: string;
+
+  @Column({nullable: true })
+  background_image: string;
+
+
   // @Column({type: 'simple-json', nullable: true})
   // demographics: any;
 
