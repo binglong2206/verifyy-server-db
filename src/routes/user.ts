@@ -61,7 +61,7 @@ router.post('/background', async (req:Request, res: Response, next: NextFunction
 
       if (file) {
           // Create a ref to the path (existing or new)
-        const storageRef = ref(storage, `${username}/profile`);
+        const storageRef = ref(storage, `${username}/background`);
         const uploadTask = uploadBytesResumable(storageRef, file)
    
          uploadTask.on('state_changed', (snapshot)=> {
@@ -74,7 +74,7 @@ router.post('/background', async (req:Request, res: Response, next: NextFunction
           ()=> {
               getDownloadURL(uploadTask.snapshot.ref).then(url => {
                 // res.locals.url = url
-                console.log('DONE', url);
+                console.log('DONE BACKGROUND UPLOAD', url);
                 res.end();
               })
           }

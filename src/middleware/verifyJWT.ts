@@ -39,14 +39,15 @@ export function verifyCookieJWT(
         sameSite: true,
         secure: true,
         path: "/",
-      }))
+      }));
+    console.log('NEW ACCESS TOKEN GENERATED')
+  } else {
+    // if Access Token not expired, then verify normally 
+    const access = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET) as AccessLoad;
   }
 
-  // if Access Token not expired, then verify normally 
-  const access = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET) as AccessLoad;
-
-  res.locals.id = access.id;
-  res.locals.username = access.username;
+  res.locals.id = session.id;
+  res.locals.username = session.username;
   console.log('VERIFY COOKIE DONE')
 
   next();
