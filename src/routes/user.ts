@@ -15,8 +15,6 @@ router.post('/profile', async (req:Request, res: Response, next: NextFunction) =
         const file = req.files.profile.data;
         //@ts-ignore
         const fileName = file.name;
-      
-       
 
         if (file) {
             // Create a ref to the path (existing or new)
@@ -57,8 +55,6 @@ router.post('/background', async (req:Request, res: Response, next: NextFunction
       //@ts-ignore
       const fileName = file.name;
     
-     
-
       if (file) {
           // Create a ref to the path (existing or new)
         const storageRef = ref(storage, `${username}/background`);
