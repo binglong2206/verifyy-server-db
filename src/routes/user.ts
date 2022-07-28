@@ -12,16 +12,18 @@ router.post('/profile', async (req:Request, res: Response, next: NextFunction) =
     try {
         const {id, username} = <Locals>res.locals
         //@ts-ignore
-        const file = req.files.profile;
+        const file = req.files.profile.data;
         //@ts-ignore
-        const fileName = req.files.name;
+        const fileName = file.name;
+      
+       
 
         if (file) {
             // Create a ref to the path (existing or new)
-          const storageRef = ref(storage, `${username}`);
+          const storageRef = ref(storage, `${username}/profile`);
           const uploadTask = uploadBytesResumable(storageRef, file)
      
-          uploadTask.on('state_changed', (snapshot)=> {
+           uploadTask.on('state_changed', (snapshot)=> {
             console.log('uploading') // Will be called everytime upload state changes
           },
             (err)=> {
@@ -30,10 +32,12 @@ router.post('/profile', async (req:Request, res: Response, next: NextFunction) =
             },
             ()=> {
                 getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                  res.locals.url = url
+                  // res.locals.url = url
+                  console.log('DONE', url);
+                  res.end();
                 })
             }
-          )
+          );
         } else {
           throw new Error('issue uploading')
         }
@@ -45,39 +49,43 @@ router.post('/profile', async (req:Request, res: Response, next: NextFunction) =
 
 
 
-router.post('/background', (req:Request, res: Response, next: NextFunction) => {
-    try {
-        const {id, username} = <Locals>res.locals
-        //@ts-ignore
-        const file = req.files.background;
-        //@ts-ignore
-        const fileName = req.files.name;
-
-        if (file) {
-            // Create a ref to the path (existing or new)
-          const storageRef = ref(storage, `${username}`);
-          const uploadTask = uploadBytesResumable(storageRef, file)
+router.post('/background', async (req:Request, res: Response, next: NextFunction) => {
+  try {
+      const {id, username} = <Locals>res.locals
+      //@ts-ignore
+      const file = req.files.profile.data;
+      //@ts-ignore
+      const fileName = file.name;
+    
      
-          uploadTask.on('state_changed', (snapshot)=> {
-            console.log('uploading') // Will be called everytime upload state changes
+
+      if (file) {
+          // Create a ref to the path (existing or new)
+        const storageRef = ref(storage, `${username}/profile`);
+        const uploadTask = uploadBytesResumable(storageRef, file)
+   
+         uploadTask.on('state_changed', (snapshot)=> {
+          console.log('uploading') // Will be called everytime upload state changes
+        },
+          (err)=> {
+              console.error(err)
+              throw new Error('upload failed')
           },
-            (err)=> {
-                console.error(err)
-                throw new Error('upload failed')
-            },
-            ()=> {
-                getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                    res.locals.url = url
-                })
-            }
-          )
-        } else {
-          throw new Error('issue uploading')
-        }
-    } catch(err){
-        console.error(err);
-        next(err)
-    }
+          ()=> {
+              getDownloadURL(uploadTask.snapshot.ref).then(url => {
+                // res.locals.url = url
+                console.log('DONE', url);
+                res.end();
+              })
+          }
+        );
+      } else {
+        throw new Error('issue uploading')
+      }
+  } catch(err){
+      console.error(err);
+      next(err)
+  }
 })
 
 

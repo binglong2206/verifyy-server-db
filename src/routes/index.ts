@@ -38,7 +38,7 @@ router.use("/dashboard", verifyCookieJWT, dashboardRouter);
 router.use("/youtube", youtubeRouter); // Social routers have custom auth middleware inside
 router.use("/instagram", instagramRouter);
 router.use("/facebook", facebookRouter);
-router.use('/user', verifyCookieJWT, userRouter);
+router.use('/user', userRouter);
 router.get('/checkUser/:username', checkUser);
 
 // Test routes

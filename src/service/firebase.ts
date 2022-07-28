@@ -1,5 +1,5 @@
-import firebase from "firebase/app";
-import "firebase/compatauth";
+import firebase, {initializeApp} from "firebase/app";
+// import "firebase/auth";
 import { getStorage, ref } from "firebase/storage";
 
 // Public API
@@ -13,7 +13,7 @@ const firebaseConfig = {
   };
 
 
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 export const firebaseSDK = firebase;
 export const storage = getStorage(app);
