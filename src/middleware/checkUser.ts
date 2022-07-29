@@ -12,9 +12,11 @@ export async function checkUser(req: Request, res: Response, next: NextFunction)
   
     if (!user) {
       console.log('USER NOT FOUND')
-      res.status(404).end();
+      res.json({result:false});
+    } else {
+      console.log('USER FOUND')
+      res.json({result:true})
     }
 
-
-    res.end()
+    
 }

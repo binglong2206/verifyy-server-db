@@ -40,13 +40,14 @@ router.use("/instagram", instagramRouter);
 router.use("/facebook", facebookRouter);
 router.use('/user', verifyCookieJWT, userRouter);
 router.get('/checkUser/:username', checkUser);
+router.post("/login", loginHandler);
+router.post("/signup", signupHandler);
+router.delete("/logout", logoutHandler);
 
 // Test routes
 router.get("/data/:id", showUserData);
 router.get("/users", showUsers);
-router.post("/login", loginHandler);
-router.post("/signup", signupHandler);
-router.delete("/logout", logoutHandler);
+
 
 
 

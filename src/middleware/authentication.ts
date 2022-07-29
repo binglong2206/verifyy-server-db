@@ -74,7 +74,7 @@ export async function signupHandler(
 ) {
   try {
     // Assume form already validated
-    const { firstname, username, password, email } = req.body;
+    const { username, password, email } = req.body;
 
     // Check if user already exist
     const user = await User.findOneBy({
@@ -84,12 +84,11 @@ export async function signupHandler(
 
     // Add user & hashed password
     const newUser = new User();
-    newUser.firstname = firstname;
     newUser.username = username;
     newUser.email = email;
 
     const hashed = bcrypt.hashSync(password, 10);
-    if (!hashed) throw Error("something went wrong");
+    if (!hashed) throw Error("Hashing went wrong");
     newUser.hashed_password = hashed;
 
     await AppDataSource.manager.save(newUser);
@@ -127,6 +126,7 @@ export async function signupHandler(
       }),
     ]);
 
+    console.log('New User Created: ', username, email)
     res.end();
   } catch (err) {
     console.error(err);
