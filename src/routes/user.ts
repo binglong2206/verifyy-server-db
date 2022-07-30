@@ -2,12 +2,17 @@ import express, { NextFunction, Request, Response } from 'express';
 import { storage } from '../service/firebase'; 
 import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { updateBackgroundImage, updateProfileImage } from '../controller/updateUser';
+import { deleteChart, patchChart } from '../controller/updateCharts';
 const router = express.Router();
 
 interface Locals{
     id: number;
     username: string
 }
+
+
+router.patch('/charts/:id', patchChart)
+router.delete('/charts/:id', deleteChart)
 
 router.post('/profile', async (req:Request, res: Response, next: NextFunction) => {
     try {
@@ -81,7 +86,10 @@ router.post('/background', async (req:Request, res: Response, next: NextFunction
       console.error(err);
       next(err)
   }
-}, updateBackgroundImage)
+}, updateBackgroundImage);
+
+
+
 
 
 export default router

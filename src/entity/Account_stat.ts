@@ -29,6 +29,8 @@ export class Account_stat extends BaseEntity {
   @Column({nullable: true })
   background_image: string;
 
+  @Column('int', {nullable: true, array: true, default:[1,2,3,4,5,6,7,8,9,10] })
+  charts_order: number[];
 
   // @Column({type: 'simple-json', nullable: true})
   // demographics: any;
