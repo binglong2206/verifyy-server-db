@@ -46,6 +46,11 @@ export function verifyCookieJWT(
     const access = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET) as AccessLoad;
   }
 
+  // Quick check if jwt username match url params if :username param exist
+  if (req.params.username) {
+    if (req.params.username !== session.username) throw new Error('cookie valid but url param dont match');
+  }
+
   res.locals.id = session.id;
   res.locals.username = session.username;
   console.log('VERIFY COOKIE DONE')

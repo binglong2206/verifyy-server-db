@@ -34,7 +34,7 @@ const router = express.Router();
 
 // next Function is automatically assigned by app.use()
 router.use('/oauth', oauthRouter)
-router.use("/dashboard", verifyCookieJWT, dashboardRouter);
+router.use("/dashboard", dashboardRouter); // auth only on private edit, not public
 router.use("/youtube", youtubeRouter); // Social routers have custom auth middleware inside
 router.use("/instagram", instagramRouter);
 router.use("/facebook", facebookRouter);
