@@ -15,37 +15,51 @@ export async function getDashboard(
   next: NextFunction
 ) {
   try {
-    const userId = parseInt(req.params.id);
+    const username = req.params.username;
+
+    const user = await User.findOne({
+      where: {
+          username: username
+      }
+  });
+
+  if (!user) {
+    console.error('USER NOT FOUND')
+    return res.status(404).end();
+  } else {
+    console.log('USER FOUND')
+  }
 
     const account_stat = await Account_stat.findOne({
       where: {
-        user: {id: userId}
+        user: {username: username}
       }
-    })
+    });
 
+  
     const yt_account = await YT_account.findOne({
       where: {
-        user: {id: userId}
+        user: {username: username}
       },
       relations: ['medias']
     });
 
     const ig_account = await IG_account.findOne({
       where: {
-        user: {id: userId}
+        user: {username: username}
       },
       relations: ['medias']
     })
 
     const fb_account = await FB_account.findOne({
       where: {
-        user: {id: userId}
+        user: {username: username}
       },
       relations: ['medias']
     })
 
     console.log("Sending dashboard data to client");
-    res.json({ // dont need to stringtify
+    return res.json({ // dont need to stringtify
       stat: account_stat,
       yt: yt_account,
       ig: ig_account,

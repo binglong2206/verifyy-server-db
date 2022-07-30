@@ -48,7 +48,7 @@ export function verifyCookieJWT(
 
   // Quick check if jwt username match url params if :username param exist
   if (req.params.username) {
-    if (req.params.username !== session.username) throw new Error('cookie valid but url param dont match');
+    if (req.params.username !== session.username) throw new Error('cookie valid but url param doesnt exist or mismatch');
   }
 
   res.locals.id = session.id;
