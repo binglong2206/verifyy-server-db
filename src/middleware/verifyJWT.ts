@@ -55,7 +55,7 @@ export function verifyCookieJWT(
   res.locals.username = session.username;
   console.log('VERIFY COOKIE DONE')
 
-  res.json({result:'done'})
+  next();
 }
 
 // NextJS already verified refresh&access. Just do both again.
