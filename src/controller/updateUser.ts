@@ -68,3 +68,27 @@ export async function updateBackgroundImage(
       next(err);
     }
   }
+
+
+  export async function updateWhitelist(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const {id, username, url} = res.locals;
+    const {input} = req.body
+    const platform = req.params.platform;
+
+    const account = await Account_stat.findOne({
+      where: {
+        user: {
+          id: id
+        }
+      }
+    })
+
+    account[`${platform}_whitelist`] = input;
+
+    console.log(`${platform} whitelist for user: ${username} requested`)
+    await AppDataSource.manager.save(account).then(r=> res.end())
+  }

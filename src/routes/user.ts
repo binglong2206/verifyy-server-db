@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { storage } from '../service/firebase'; 
 import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { updateBackgroundImage, updateProfileImage } from '../controller/updateUser';
+import { updateBackgroundImage, updateProfileImage, updateWhitelist } from '../controller/updateUser';
 import { deleteChart, patchChart } from '../controller/updateCharts';
 const router = express.Router();
 
@@ -89,6 +89,8 @@ router.post('/background', async (req:Request, res: Response, next: NextFunction
 }, updateBackgroundImage);
 
 
+
+router.patch('/whitelist/:platform', updateWhitelist)
 
 
 
