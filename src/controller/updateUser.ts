@@ -23,7 +23,9 @@ export async function updateProfileImage(
    const {id, username, url} = res.locals;
    const account = await Account_stat.findOne({
     where: {
-        id: id
+        user: {
+          id: id
+        }
     }
    });
 
@@ -49,7 +51,9 @@ export async function updateBackgroundImage(
      const {id, username, url} = res.locals;
      const account = await Account_stat.findOne({
       where: {
-          id: id
+          user: {
+            id: id
+          }
       }
      });
   

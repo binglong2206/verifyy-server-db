@@ -15,31 +15,52 @@ export async function getDashboard(
   next: NextFunction
 ) {
   try {
-    const username = req.params.username;
+    let username: string;
+    let id: number;
 
-    if (username) {
+    // if have params, means the request is for public dashbaord /:username
+    if (req.params.username) {
+      username = req.params.username
       const user = await User.findOne({
       where: {
             username: username
         }
       });
-    
+
+    // Check Slug
       if (!user) {
         console.error('USER NOT FOUND')
         return res.status(404).end();
       } else {
         console.log('USER FOUND')
       }
+    } else {
+      // if no params, means request is from /edit. Get username and id from verified cookie
+      username = res.locals.username;
+      id = res.locals.id
     }
     
 
-    const account_stat = await Account_stat.findOne({
-      where: {
-        user: {username: username}
-      }
-    });
+    // const account_stat = await Account_stat.findOne({
+    //   where: {
+    //     user: {username: username}
+    //   },
+    //   relations: {
+    //     user: true
+    //   }
+    // });
+
+    const account_stat = await AppDataSource.getRepository(Account_stat)
+      .createQueryBuilder('account_stat')
+      .leftJoin('account_stat.user', 'user')
+      .where('user.username = :username', {username: username})
+      .select('user.id, user.username, user.email, follower_count, media_count, profile_image, background_image, charts_order')
+      .getRawOne();
+
 
   
+
+    // To refactor the code below to single User query and relations with the 3 accounts
     const yt_account = await YT_account.findOne({
       where: {
         user: {username: username}
