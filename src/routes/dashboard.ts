@@ -9,7 +9,7 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 
-router.get("/edit/:username", verifyCookieJWT, getDashboard);
+router.get("/edit", verifyCookieJWT, getDashboard);
 router.get("/:username", getDashboard);
 
 

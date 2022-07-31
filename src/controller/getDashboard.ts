@@ -17,18 +17,21 @@ export async function getDashboard(
   try {
     const username = req.params.username;
 
-    const user = await User.findOne({
+    if (username) {
+      const user = await User.findOne({
       where: {
-          username: username
+            username: username
+        }
+      });
+    
+      if (!user) {
+        console.error('USER NOT FOUND')
+        return res.status(404).end();
+      } else {
+        console.log('USER FOUND')
       }
-  });
-
-  if (!user) {
-    console.error('USER NOT FOUND')
-    return res.status(404).end();
-  } else {
-    console.log('USER FOUND')
-  }
+    }
+    
 
     const account_stat = await Account_stat.findOne({
       where: {
