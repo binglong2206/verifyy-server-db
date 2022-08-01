@@ -19,6 +19,7 @@ export function verifyCookieJWT(
   res: Response,
   next: NextFunction
 ) {
+  console.log('THIS ONE', req.headers.cookie)
   const cookies = cookie.parse(req.headers.cookie);
   const { accessToken, refreshToken } = cookies;
 

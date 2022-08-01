@@ -23,6 +23,7 @@ export async function patchChart(
 
     account.charts_order.push(chartId);
 
+    console.log('Chart ID: ', chartId, 'for user: ', username, 'patched' )
     await AppDataSource.manager.save(account).then(r => res.end())
     
   } catch (err) {
@@ -49,6 +50,8 @@ export async function deleteChart(
         });
     
         account.charts_order.splice(account.charts_order.indexOf(chartId), 1)
+
+        console.log('Chart ID: ', chartId, 'for user: ', username, 'deleted' )
     
         await AppDataSource.manager.save(account).then(r => res.end())
         

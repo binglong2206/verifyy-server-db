@@ -23,7 +23,7 @@ AppDataSource.initialize()
     // Init
     const app = express();
 
-    // Security Middleware=
+    // Security Middleware
     app.use(
       cors({
         credentials: true,
