@@ -11,8 +11,10 @@ interface Locals{
 }
 
 
-router.patch('/charts/:id', patchChart)
-router.delete('/charts/:id', deleteChart)
+router.patch('/charts/:chartId', patchChart)
+router.delete('/charts/:chartId', deleteChart)
+router.patch('/whitelist/:platform', updateWhitelist)
+
 
 router.post('/profile', async (req:Request, res: Response, next: NextFunction) => {
     try {
@@ -90,7 +92,6 @@ router.post('/background', async (req:Request, res: Response, next: NextFunction
 
 
 
-router.patch('/whitelist/:platform', updateWhitelist)
 
 
 
