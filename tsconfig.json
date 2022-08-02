@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["es5", "es6"],
+    "skipLibCheck": true,
     "target": "es6",
     "module": "commonjs",
     "esModuleInterop": true,
@@ -9,5 +10,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true
-  }
+  },
+  "include": [
+    "src/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts",
+  ]
 }

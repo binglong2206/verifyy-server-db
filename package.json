@@ -39,7 +39,7 @@
   },
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "start": "ts-node src/index.ts",
+    "start": "ts-node build/index.js",
     "build": "tsc",
     "typeorm": "typeorm-ts-node-commonjs"
   }
