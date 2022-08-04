@@ -61,7 +61,7 @@ export async function updateIG(
       const ig_media = new IG_media(); // map & create multiple media entity in array
       ig_media.like_count = e.like_count;
       ig_media.comment_count = e.comments_count;
-      ig_media.media_url = e.media_url;
+      ig_media.thumbnail = e.media_url;
       ig_media.src_url = e.permalink;
       ig_media.account = ig_account; // This is null cus' account hasnt been saved yet
       await AppDataSource.manager.save(ig_media).then(() => {

@@ -3,6 +3,9 @@ import { storage } from '../service/firebase';
 import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { updateBackgroundImage, updateProfileImage, updateWhitelist } from '../controller/updateUser';
 import { deleteChart, patchChart } from '../controller/updateCharts';
+import {loadSampleData} from "../controller/loadSampleData"
+import aggregateStat from '../controller/aggregateStat';
+
 const router = express.Router();
 
 interface Locals{
@@ -14,6 +17,7 @@ interface Locals{
 router.patch('/charts/:chartId', patchChart)
 router.delete('/charts/:chartId', deleteChart)
 router.patch('/whitelist/:platform', updateWhitelist)
+router.get('/sampleData', loadSampleData, aggregateStat)
 
 
 router.post('/profile', async (req:Request, res: Response, next: NextFunction) => {

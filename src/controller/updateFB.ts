@@ -57,7 +57,7 @@ export async function updateFB(
       const fb_media = new FB_media(); // map & create multiple media entity in array
       fb_media.like_count = e.like_count;
       fb_media.comment_count = e.comment_count;
-      fb_media.media_url = e.media_url;
+      fb_media.thumbnail = e.media_url;
       fb_media.src_url = e.src_url;
       fb_media.impression_count = e.impression_count;
       fb_media.account = fb_account;
