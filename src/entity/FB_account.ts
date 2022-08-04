@@ -20,10 +20,10 @@ export class FB_account extends BaseEntity {
   id: number;
 
   @Column({ nullable: true })
-  username: number;
+  username: string;
 
   @Column({ nullable: true })
-  profile_image: number;
+  profile_image: string;
 
   @Column({ nullable: true })
   follower_count: number;
