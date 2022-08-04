@@ -61,7 +61,7 @@ export async function updateBackgroundImage(
   
      await AppDataSource.manager.save(account).then(()=> {
         console.log('background upload done');
-        res.end();
+        res.json({url: url});
      })
      
   } catch (err) {
