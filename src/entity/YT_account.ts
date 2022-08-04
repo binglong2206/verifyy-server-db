@@ -20,6 +20,12 @@ export class YT_account extends BaseEntity {
   id: number;
 
   @Column({ nullable: true })
+  username: string
+
+  @Column({ nullable: true })
+  profile_image: string
+
+  @Column({ nullable: true })
   follower_count: number;
 
   @Column({ nullable: true })
@@ -27,6 +33,9 @@ export class YT_account extends BaseEntity {
 
   @Column({ nullable: true })
   media_count: number;
+
+  @Column({ nullable: true })
+  src_url: string
 
   @Column({ type: "simple-json", nullable: true })
   demographics: any;

@@ -26,7 +26,7 @@ export class IG_media extends BaseEntity {
   comment_count: number;
 
   @Column({ nullable: true })
-  media_url: string;
+  thumbnail: string;
 
   @Column({ nullable: true })
   src_url: string;

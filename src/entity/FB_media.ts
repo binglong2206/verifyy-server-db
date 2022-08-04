@@ -30,7 +30,7 @@ export class FB_media extends BaseEntity {
   src_url: string;
 
   @Column({ nullable: true })
-  media_url: string;
+  thumbnail: string;
 
   @Column({ nullable: true })
   impression_count: string;

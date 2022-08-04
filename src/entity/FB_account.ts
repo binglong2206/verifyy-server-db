@@ -20,6 +20,12 @@ export class FB_account extends BaseEntity {
   id: number;
 
   @Column({ nullable: true })
+  username: number;
+
+  @Column({ nullable: true })
+  profile_image: number;
+
+  @Column({ nullable: true })
   follower_count: number;
 
   @Column({ nullable: true })
@@ -27,6 +33,9 @@ export class FB_account extends BaseEntity {
 
   @Column({ nullable: true })
   media_count: number;
+
+  @Column({ nullable: true })
+  src_url: number;
 
   @Column({ type: "simple-json", nullable: true })
   demographics: any;

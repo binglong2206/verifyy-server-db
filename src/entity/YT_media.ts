@@ -23,6 +23,12 @@ export class YT_media extends BaseEntity {
   title: string;
 
   @Column({ nullable: true })
+  src_url: string;
+
+  @Column({ nullable: true })
+  thumbnail: string;
+
+  @Column({ nullable: true })
   view_count: number;
 
   @Column({ nullable: true })
