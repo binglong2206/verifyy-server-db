@@ -5,6 +5,7 @@ import { updateBackgroundImage, updateProfileImage, updateWhitelist } from '../c
 import { deleteChart, patchChart } from '../controller/updateCharts';
 import {loadSampleData} from "../controller/loadSampleData"
 import aggregateStat from '../controller/aggregateStat';
+import { getDashboard } from '../controller/getDashboard';
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ interface Locals{
 router.patch('/charts/:chartId', patchChart)
 router.delete('/charts/:chartId', deleteChart)
 router.patch('/whitelist/:platform', updateWhitelist)
-router.get('/sampleData', loadSampleData, aggregateStat)
+router.get('/sampleData', loadSampleData, aggregateStat, getDashboard)
 
 
 router.post('/profile', async (req:Request, res: Response, next: NextFunction) => {

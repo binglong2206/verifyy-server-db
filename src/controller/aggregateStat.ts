@@ -45,7 +45,10 @@ export default async function aggregateStat(
     account_stat.media_count = media_sum;
 
 
-    await AppDataSource.manager.save(account_stat).then(()=>res.end())
+    await AppDataSource.manager.save(account_stat).then(()=>{
+      // return res.end()
+      next() // to getDashboard
+    })
 
 
   } catch (err) {
