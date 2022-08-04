@@ -33,7 +33,7 @@ export async function updateProfileImage(
 
    await AppDataSource.manager.save(account).then(()=> {
     console.log('profile upload done');
-    res.end();
+    res.json({url: url});
    })
 
 } catch (err) {
