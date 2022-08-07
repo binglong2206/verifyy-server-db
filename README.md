@@ -1,7 +1,3 @@
-# Awesome Project Build with TypeORM
+# Verifyy's API server and database
 
-Steps to run this project:
-
-1. Run `npm i` command
-2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+Client: https://github.com/binglong2206/verifyy-cra
