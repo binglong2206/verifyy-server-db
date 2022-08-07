@@ -49,7 +49,7 @@ AppDataSource.initialize()
     app.use(fileupload()) 
 
     // Main routing
-    app.use("/", indexRouter);
+    app.use("/api", indexRouter);
 
     // 404
     app.use((req: Request, res: Response, next: NextFunction) => {
