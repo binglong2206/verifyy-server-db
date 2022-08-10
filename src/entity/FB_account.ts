@@ -35,7 +35,7 @@ export class FB_account extends BaseEntity {
   media_count: number;
 
   @Column({ nullable: true })
-  src_url: number;
+  src_url: string;
 
   @Column({ type: "simple-json", nullable: true })
   demographics: any;
