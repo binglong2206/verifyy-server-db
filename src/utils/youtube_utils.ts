@@ -6,7 +6,7 @@ import axios from "axios";
 
 let url = "https://accounts.google.com/o/oauth2/v2/auth";
   url += `?client_id=284320772177-9it3a6skjshvpeu4nvpeknp6nq8ko8h2.apps.googleusercontent.com`;
-  url += "&redirect_uri=http://localhost:8000/youtube/connect";
+  url += "&redirect_uri=http://localhost:8000/api/youtube/connect";
   url += "&response_type=code";
   url +=
     "&scope=https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/youtube.readonly";
@@ -21,7 +21,7 @@ export function getCode(url) {
 
 export async function getAccessToken(code) {
   const accessToken = await axios.post(
-    `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.YT_CLIENT_ID}&client_secret=${process.env.YT_CLIENT_SECRET}&redirect_uri=http://localhost:8000/youtube/connect&grant_type=authorization_code`
+    `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.YT_CLIENT_ID}&client_secret=${process.env.YT_CLIENT_SECRET}&redirect_uri=http://localhost:8000/api/youtube/connect&grant_type=authorization_code`
   ).then(r=> r.data.access_token);
 
   return accessToken
@@ -113,7 +113,7 @@ export async function fetchIntervalData (yt_accessToken: string) {
 
 
 export async function postYTData(organized_data: YT_data, cookies:string) {
-  await axios.post("http://localhost:8000/youtube/update", organized_data, {
+  await axios.post("http://localhost:8000/api/youtube/update", organized_data, {
     headers:  {
       "Content-Type": "application/json",
       "Authorization": cookies

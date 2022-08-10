@@ -74,6 +74,7 @@ export function verifyHeaderJWT(
   const session = jwt.verify(web_refreshToken, process.env.JWT_REFRESH_SECRET);
   res.locals.id = access.id;
   res.locals.username = access.username;
+  res.locals.fromOauth = true
   console.log('verify header DONE')
   next();
 }

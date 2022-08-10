@@ -46,7 +46,10 @@ export default async function aggregateStat(
 
 
     await AppDataSource.manager.save(account_stat).then(()=>{
-      // return res.end()
+      // If aggregateState is called by an Oauth redirect, then end and proceed with oauth
+      if (res.locals.fromOauth) return res.end()
+
+      // Else push to next
       next() // to getDashboard
     })
 

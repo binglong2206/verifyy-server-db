@@ -64,7 +64,7 @@ router.get('/connect', async (req: Request, res: Response, next: NextFunction) =
    };
 
 // Post data as json to DB's controller
-   await postYTData(organized_data, req.headers.cookie).then(()=> {res.redirect('http://localhost:3000')})
+   await postYTData(organized_data, req.headers.cookie).then(()=> {res.redirect('http://localhost:3000/edit')})
    
   } catch(err) {
    console.error(err);
