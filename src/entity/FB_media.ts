@@ -33,7 +33,7 @@ export class FB_media extends BaseEntity {
   thumbnail: string;
 
   @Column({ nullable: true })
-  impression_count: string;
+  impression_count: number;
 
   @ManyToOne(() => FB_account, (FB_account) => FB_account.medias, {onDelete: 'CASCADE'})
   account: FB_account;
