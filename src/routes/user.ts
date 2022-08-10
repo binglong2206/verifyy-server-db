@@ -18,7 +18,7 @@ interface Locals{
 router.patch('/charts/:chartId', patchChart)
 router.delete('/charts/:chartId', deleteChart)
 router.patch('/whitelist/:platform', updateWhitelist)
-router.get('/sampleData', loadSampleData, aggregateStat, getDashboard)
+router.get('/sampleData', loadSampleData, aggregateStat, getDashboard) // aggregateStat creates Account_stat table
 
 
 router.post('/profile', async (req:Request, res: Response, next: NextFunction) => {
