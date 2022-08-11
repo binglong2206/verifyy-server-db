@@ -99,6 +99,8 @@ export async function loadSampleData(
     if (medias) mediaRepository.remove(medias);
 
     // Insert from req.body
+    fb_account.username = 'Official RobertRobinson'
+    fb_account.profile_image = 'https://firebasestorage.googleapis.com/v0/b/verifyy-e4ece.appspot.com/o/cM.Nachtschatt-9297.jpg?alt=media&token=5e747a04-7342-410b-8b87-40b28a8cf8d8'
     fb_account.follower_count = 980
     fb_account.like_count = 36
     fb_account.media_count = 80
@@ -137,7 +139,8 @@ export async function loadSampleData(
     if (IGmedias) IGmediaRepository.remove(IGmedias);
 
     // Insert from req.body
-    ig_account.username = 'dsfdsf'
+    ig_account.username = '@Robert20Syl'
+    ig_account.profile_image = 'https://firebasestorage.googleapis.com/v0/b/verifyy-e4ece.appspot.com/o/20syl-Mathieu-Renoult-idile-magazine-1.jpg?alt=media&token=f1e7a654-3a5d-4640-a9d0-eb9031078f83'
     ig_account.follower_count = 889
     ig_account.media_count = 26
     ig_account.demographics = {"male":44.44444444444444,"female":24.242424242424242,"others":31.313131313131315,"age":{"18-24":13.131313131313133,"25-34":23.232323232323232,"35-44":32.323232323232325,"45+":31.313131313131315}}
@@ -177,6 +180,8 @@ export async function loadSampleData(
     if (YTmedias) YTmediaRepository.remove(YTmedias);
 
     // Insert from req.body
+    yt_account.username ='Robert Robinson'
+    yt_account.profile_image = 'https://firebasestorage.googleapis.com/v0/b/verifyy-e4ece.appspot.com/o/vldEhcWjVYv-qmRSaJ9e7D7QPRTiqqSEYswwjon75aw%2C0K9N-iwDS3H0qz5aDj3jsYQb-ziobmaKhwqgilcgATw.jpg?alt=media&token=9c086e27-bfc8-4b0a-8258-98d7276ed3fc'
     yt_account.follower_count = 586
     yt_account.view_count = 586
     yt_account.media_count = 49
